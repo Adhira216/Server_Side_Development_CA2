@@ -34,8 +34,7 @@
             </section>
         @else
             <section class="empty-state">
-                <h2>No food lists yet</h2>
-                <p>Your lists will appear here once they have been created.</p>
+                <h2>No food lists available</h2>
             </section>
         @endif
     </main>

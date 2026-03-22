@@ -57,6 +57,9 @@ body {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0;        
+    font-size: inherit;    
+    font-family: inherit; 
 }
 
 .nav-links a:hover,
@@ -278,4 +281,99 @@ body {
     .hero {
         padding: 1.6rem;
     }
+}
+
+/* Form Panel */
+.panel {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+/* Form container */
+.form-wrap {
+    padding: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--paper);
+    box-shadow: 0 12px 28px rgba(75, 54, 35, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+/* Fields */
+.field {
+    margin-bottom: 1.4rem;
+}
+
+.field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+}
+
+/* Inputs + textarea */
+.field input,
+.field textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus state */
+.field input:focus,
+.field textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(157, 94, 61, 0.15);
+}
+
+/* Textarea size */
+.field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Error box */
+.error-box {
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+    border: 1px solid rgba(180, 60, 60, 0.3);
+    background: rgba(255, 230, 230, 0.6);
+    color: #7a1f1f;
+}
+
+.error-box h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+}
+
+.error-box ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+/* Field error text */
+.field-error {
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+    color: #b23a3a;
+}
+
+/* Actions (buttons row) */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+/* Back link subtle hover */
+.actions .link:hover {
+    text-decoration: underline;
 }

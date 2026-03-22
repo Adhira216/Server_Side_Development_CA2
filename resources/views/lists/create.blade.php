@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+
+    <x-header />
+
     <main class="page">
         <section class="panel">
             <div class="hero">

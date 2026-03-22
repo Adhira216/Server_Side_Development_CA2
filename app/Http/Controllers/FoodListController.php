@@ -23,7 +23,7 @@ class FoodListController extends Controller
      */
     public function create()
     {
-        //
+        return view('lists.create');
     }
 
     /**
