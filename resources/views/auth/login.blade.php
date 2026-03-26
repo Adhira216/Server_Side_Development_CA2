@@ -8,36 +8,47 @@
     <title>Login</title>
 </head>
 <body>
+
     <x-header />
 
-    <div class="auth-container">
-        <h1>Login</h1>
+    <div class="layout">
+        <x-sidebar />
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <div>
-                <label>Email:</label>
-                <input type="email" name="email" value="{{ old('email') }}" required>
-                @error('email') <div>{{ $message }}</div> @enderror
+        <main class="page">
+            <div class="auth-container">
+                <h1>Login</h1>
+
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" value="{{ old('email') }}" required>
+                        @error('email') <div class="field-error">{{ $message }}</div> @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+
+                    <div class="field">
+                        <label>
+                            <input type="checkbox" name="remember"> Remember Me
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit" class="button">Login</button>
+                    </div>
+                </form>
+
+                <p style="text-align:center; margin-top:1rem;">
+                    Don't have an account? <a href="{{ route('register') }}" class="link">Register here</a>
+                </p>
             </div>
-
-            <div>
-                <label>Password:</label>
-                <input type="password" name="password" required>
-            </div>
-
-            <div>
-                <label>
-                    <input type="checkbox" name="remember"> Remember Me
-                </label>
-            </div>
-
-            <button type="submit">Login</button>
-        </form>
-
-        <p style="text-align:center; margin-top:1rem;">
-            Don't have an account? <a href="{{ route('register') }}">Register</a>
-        </p>
+        </main>
     </div>
+
 </body>
 </html>
