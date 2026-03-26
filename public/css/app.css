@@ -13,17 +13,17 @@ body {
     position: relative;
     width: min(1120px, calc(100% - 2rem));
     margin: 0 auto;
-    padding: 4rem 0 5rem;
+    margin-top: 4rem;
 }
 
-/* Header */
+/* HEADER */
 .site-header {
     position: sticky;
     top: 0;
     z-index: 1000;
     background: var(--paper);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--accent);
 }
 
 .header-inner {
@@ -70,10 +70,9 @@ body {
 /* Hero Section */
 .hero {
     padding: 2.5rem;
-    border: 1px solid var(--line);
+    border: 1px solid var(--accent);
     border-radius: 20px;
     background: var(--paper);
-    box-shadow: 0 16px 34px rgba(75, 54, 35, 0.09);
     backdrop-filter: blur(14px);
     margin-bottom: 2rem;
 }
@@ -127,12 +126,11 @@ body {
     flex-direction: column;
     min-height: 240px;
     padding: 1.5rem;
-    border: 1px solid var(--line);
+    border: 1px solid var(--accent);
     border-radius: 26px;
     background: var(--card);
     color: inherit;
     text-decoration: none;
-    box-shadow: 0 16px 34px rgba(75, 54, 35, 0.09);
     backdrop-filter: blur(8px);
     transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     overflow: hidden;
@@ -151,7 +149,6 @@ body {
 .list-card:hover {
     transform: translateY(-6px);
     border-color: rgba(157, 94, 61, 0.35);
-    box-shadow: 0 22px 42px rgba(75, 54, 35, 0.14);
 }
 
 .list-card h2 {
@@ -176,27 +173,24 @@ body {
 .empty-state {
     margin-top: 2rem;
     padding: 2rem;
-    border: 1px dashed rgba(67, 51, 37, 0.24);
+    border: 1px dashed var(--accent);
     border-radius: 24px;
-    background: rgba(255, 250, 242, 0.7);
+    background: var(--card);
     text-align: center;
     color: var(--muted);
 }
 
 /* Auth Forms */
 .auth-container {
-    max-width: 400px;
-    margin: 4rem auto;
     padding: 2rem;
     background: var(--paper);
     border-radius: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 1px solid var(--accent);
 }
 
 .auth-container h1 {
     text-align: center;
     font-family: 'Cormorant Garamond', serif;
-    margin-bottom: 2rem;
 }
 
 .auth-container form div {
@@ -214,7 +208,7 @@ body {
 .auth-container input[type="password"] {
     width: 100%;
     padding: 0.6rem 0.8rem;
-    border: 1px solid var(--line);
+    border: 1px solid var(--accent);
     border-radius: 0.5rem;
     background: var(--bg);
 }
@@ -246,7 +240,6 @@ body {
     color: #fff9f2;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 16px 28px rgba(124, 72, 45, 0.24);
     text-decoration: none;
 }
 
@@ -292,14 +285,15 @@ body {
 /* Form container */
 .form-wrap {
     padding: 2rem;
-    border: 1px solid var(--line);
+    border: 1px solid var(--accent);
     border-radius: 20px;
     background: var(--paper);
-    box-shadow: 0 12px 28px rgba(75, 54, 35, 0.08);
     backdrop-filter: blur(10px);
 }
 
-/* Fields */
+
+/* FIELDS */
+
 .field {
     margin-bottom: 1.4rem;
 }
@@ -317,7 +311,7 @@ body {
     width: 100%;
     padding: 0.7rem 0.9rem;
     border-radius: 10px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--accent);
     background: var(--bg);
     font-family: inherit;
     font-size: 0.95rem;
@@ -376,4 +370,72 @@ body {
 /* Back link subtle hover */
 .actions .link:hover {
     text-decoration: underline;
+}
+
+
+/* SIDEBAR */
+
+/* Layout (sidebar + content) */
+.layout {
+    display: flex;
+    gap: 1.5rem;
+    
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    height: 100vh; 
+    position: sticky;
+
+    padding: 1.5rem;
+    border: 1px solid var(--accent);
+
+    background: var(--paper);
+    backdrop-filter: blur(10px);
+}
+
+/* Title */
+.sidebar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+    color: var(--accent-dark);
+}
+
+/* Navigation */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Links */
+.sidebar-nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+.sidebar-nav a:hover {
+    background: rgba(157, 94, 61, 0.08);
+    color: var(--accent-dark);
+}
+
+/* Active state */
+.sidebar-nav a.active {
+    background: rgba(157, 94, 61, 0.15);
+    color: var(--accent-dark);
+}
+
+/* Content spacing */
+.content {
+    flex: 1;
 }
