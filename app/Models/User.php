@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function foodLists(): HasMany
+    {
+        return $this->hasMany(FoodList::class);
+    }
 }

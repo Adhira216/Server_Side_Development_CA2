@@ -1,8 +1,7 @@
 <?php
 
-Route::resource('lists', \App\Http\Controllers\FoodListController::class)->middleware('auth');
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FoodListController;
 
 Route::get('/', function () {
     return view('lists.index');

@@ -50,7 +50,7 @@ class FoodListController extends Controller
      */
     public function show(FoodList $foodList)
     {
-        //
+        return view('lists.show', compact('foodList'));
     }
 
     /**
@@ -58,7 +58,7 @@ class FoodListController extends Controller
      */
     public function edit(FoodList $foodList)
     {
-        //
+        return view('lists.edit', compact('foodList'));
     }
 
     /**
