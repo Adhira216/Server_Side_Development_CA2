@@ -1,0 +1,41 @@
+/* CSS for sidebar.blade.php */
+
+@import url('variables.css');
+
+.home-layout .sidebar {
+    position: sticky;
+    top: 6rem;
+    height: calc(100vh - 6rem);
+    border-radius: 10px;
+    border: 1px solid var(--home-line);
+    background: var(--home-panel);
+    backdrop-filter: blur(12px);
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    color: var(--home-ink);
+}
+
+.home-layout .sidebar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--home-plum);
+    margin-bottom: 1rem;
+}
+
+.home-layout .sidebar-nav a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--home-ink);
+    font-weight: 500;
+    transition: all 180ms ease;
+}
+
+.home-layout .sidebar-nav a:hover,
+.home-layout .sidebar-nav a.active {
+    background: rgba(118, 80, 122, 0.09);
+    color: var(--home-plum);
+}
