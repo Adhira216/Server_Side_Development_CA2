@@ -15,6 +15,19 @@
     --danger-bg: rgba(183, 28, 28, 0.08);
     --danger-line: rgba(183, 28, 28, 0.22);
     --danger-text: #b71c1c;
+
+    --home-surface: #fffdf9;
+    --home-panel: rgba(255, 251, 246, 0.92);
+    --home-ink: #27323f;
+    --home-muted: #6b7280;
+    --home-line: rgba(39, 50, 63, 0.09);
+    --home-plum: #76507a;
+
+    /* --home-apricot: #d79a70;
+    --home-sage: #8fa886;
+    --home-rose: #d8b3b8; */
+
+    /* --home-shadow: 0 28px 70px rgba(46, 50, 58, 0.12); */
 }
 
 * {
