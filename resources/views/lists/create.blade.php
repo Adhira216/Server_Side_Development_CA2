@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 </head>
-<body>
+<body class="home-page-body">
 
     <x-header />
 
@@ -19,16 +19,18 @@
             <x-sidebar />
 
             <main class="home-main">
-                <section class="hero">
-                    <span class="eyebrow">New Collection</span>
-                    <h1 class="hero-title">Create a Food List</h1>
-                    <p>
-                        Add a title and short description for your list. Once saved, it can be viewed from the
-                        main food lists page.
-                    </p>
+                <section class="content-panel section-intro">
+                    <div class="section-copy">
+                        <span class="eyebrow">New Collection</span>
+                        <h1 class="hero-title">Create a Food List</h1>
+                        <p class="section-summary">
+                            Build a polished list for places you want to revisit, compare, or share with people
+                            planning the next food trail with you.
+                        </p>
+                    </div>
                 </section>
 
-                <div class="auth-container">
+                <div class="content-panel form-panel auth-container">
                     @if ($errors->any())
                         <div class="error-box">
                             <h2>Please fix the following errors:</h2>
