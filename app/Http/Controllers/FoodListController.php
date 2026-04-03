@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FoodList;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class FoodListController extends Controller
 {
@@ -13,9 +14,18 @@ class FoodListController extends Controller
      */
     public function index()
     {
-        $foodLists = FoodList::latest()->get();
+        $viewMode = request('view', 'latest');
+        $hasVotesColumn = Schema::hasColumn('food_lists', 'votes');
 
-        return view('lists.index', compact('foodLists'));
+        $foodLists = FoodList::query()
+            ->when(
+                $viewMode === 'popular' && $hasVotesColumn,
+                fn ($query) => $query->orderByDesc('votes')->latest(),
+                fn ($query) => $query->latest()
+            )
+            ->get();
+
+        return view('lists.index', compact('foodLists', 'viewMode', 'hasVotesColumn'));
     }
 
     /**
