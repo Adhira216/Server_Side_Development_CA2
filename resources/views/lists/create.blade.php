@@ -53,6 +53,7 @@
                                 name="title"
                                 value="{{ old('title') }}"
                                 placeholder="Weekend meal plan"
+                                required
                             >
                             @error('title')
                                 <div class="field-error">{{ $message }}</div>
@@ -65,8 +66,38 @@
                                 id="description"
                                 name="description"
                                 placeholder="Write a short description for this food list..."
+                                required
                             >{{ old('description') }}</textarea>
                             @error('description')
+                                <div class="field-error">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="field">
+                            <label for="location">Location</label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                value="{{ old('location') }}"
+                                placeholder="Dublin"
+                                required
+                            >
+                            @error('location')
+                                <div class="field-error">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="field">
+                            <label for="tags">Tags</label>
+                            <input
+                                type="text"
+                                id="tags"
+                                name="tags"
+                                value="{{ old('tags') }}"
+                                placeholder="brunch, pizza, casual"
+                            >
+                            @error('tags')
                                 <div class="field-error">{{ $message }}</div>
                             @enderror
                         </div>
