@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\FoodList;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 
 class FoodListController extends Controller
 {
@@ -14,18 +13,9 @@ class FoodListController extends Controller
      */
     public function index()
     {
-        $viewMode = request('view', 'latest');
-        $hasVotesColumn = Schema::hasColumn('food_lists', 'votes');
+        $foodLists = FoodList::latest()->get();
 
-        $foodLists = FoodList::query()
-            ->when(
-                $viewMode === 'popular' && $hasVotesColumn,
-                fn ($query) => $query->orderByDesc('votes')->latest(),
-                fn ($query) => $query->latest()
-            )
-            ->get();
-
-        return view('lists.index', compact('foodLists', 'viewMode', 'hasVotesColumn'));
+        return view('lists.index', compact('foodLists'));
     }
 
     /**
@@ -44,15 +34,19 @@ class FoodListController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'tags' => 'nullable|string|max:255',
         ]);
 
         FoodList::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
+            'location' => $validated['location'],
+            'tags' => $validated['tags'],
             'user_id' => $request->user()->id,
         ]);
 
-        return redirect()->route('lists.index');
+        return redirect()->route('lists.index')->with('success', 'Food list created successfully.');
     }
 
     /**
