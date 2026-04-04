@@ -19,37 +19,25 @@
             <main class="home-main">
                 <section class="content-panel section-intro">
                     <div class="section-copy">
-                        <span class="eyebrow">{{ $viewMode === 'popular' ? 'Most Loved Trails' : 'Curated Collection' }}</span>
-                        <h1 class="hero-title">{{ $viewMode === 'popular' ? 'Popular Food Lists' : 'Food Lists' }}</h1>
+                        <span class="eyebrow">Curated Collection</span>
+                        <h1 class="hero-title">Food Lists</h1>
                         <p class="section-summary">
-                            {{ $viewMode === 'popular'
-                                ? 'See the food lists getting the strongest response first, ordered by votes so the most useful trails rise to the top.'
-                                : 'Explore every saved list in one place and move between fresh ideas, planned outings, and the food trails worth revisiting.' }}
+                            Explore every saved food list in one place and browse fresh ideas, planned outings, and collections worth revisiting.
                         </p>
                     </div>
 
                     <div class="view-switcher">
-                        <a href="{{ route('lists.index') }}" class="switch-pill {{ $viewMode !== 'popular' ? 'active' : '' }}">Latest Lists</a>
-                        <a href="{{ route('lists.index', ['view' => 'popular']) }}" class="switch-pill {{ $viewMode === 'popular' ? 'active' : '' }}">Popular Lists</a>
+                        <span class="switch-pill active">All Food Lists</span>
                     </div>
                 </section>
-
-                @if(!$hasVotesColumn)
-                    <section class="content-panel empty-state">
-                        <h2>Popular mode needs a database update</h2>
-                        <p>The app is using latest lists for now because your current `food_lists` table does not include the `votes` column yet.</p>
-                    </section>
-                @endif
 
                 @if(($foodLists ?? collect())->count())
                     <section class="lists-grid">
                         @foreach($foodLists as $foodList)
                             <a href="{{ route('lists.show', $foodList) }}" class="list-card">
                                 <div class="list-card-top">
-                                    <span class="list-count">{{ $viewMode === 'popular' ? 'Trending Trail' : 'Food List' }}</span>
-                                    <span class="vote-pill">
-                                        {{ $hasVotesColumn ? $foodList->votes . ' votes' : 'Latest' }}
-                                    </span>
+                                    <span class="list-count">Food List</span>
+                                    <span class="vote-pill">View List</span>
                                 </div>
                                 <h2>{{ $foodList->title }}</h2>
                                 <p>{{ \Illuminate\Support\Str::limit($foodList->description, 150) }}</p>
