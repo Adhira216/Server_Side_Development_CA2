@@ -66,12 +66,15 @@
                     <div class="section-copy">
                         <span class="eyebrow">Curated Collection</span>
                         <h1 class="hero-title">Food Lists</h1>
+                        <span class="eyebrow">Curated Collection</span>
+                        <h1 class="hero-title">Food Lists</h1>
                         <p class="section-summary">
                             Explore every saved food list in one place and discover collections built for planning, sharing, and revisiting great meals.
                         </p>
                     </div>
 
                     <div class="view-switcher">
+                        <span class="switch-pill active">All Food Lists</span>
                         <span class="switch-pill active">All Food Lists</span>
                     </div>
                 </section>
