@@ -52,32 +52,53 @@ class FoodListController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FoodList $foodList)
+    public function show(FoodList $list)
     {
+        $foodList = $list;
+
         return view('lists.show', compact('foodList'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FoodList $foodList)
+    public function edit(FoodList $list)
     {
+        $foodList = $list;
+
         return view('lists.edit', compact('foodList'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FoodList $foodList)
+    public function update(Request $request, FoodList $list)
     {
-        //
+        abort_unless($request->user()->id === $list->user_id, 403);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'tags' => 'nullable|string|max:255',
+        ]);
+
+        $list->update($validated);
+
+        return redirect()->to('/lists/' . $list->getKey())
+            ->with('success', 'Food list updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FoodList $foodList)
+    public function destroy(FoodList $list)
     {
-        //
+        abort_unless(auth()->id() === $list->user_id, 403);
+
+        $list->delete();
+
+        return redirect()->route('lists.index')
+            ->with('success', 'Food list deleted successfully.');
     }
 }
