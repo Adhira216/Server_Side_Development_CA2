@@ -42,7 +42,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('lists.update', $foodList) }}" method="POST">
+                    <form action="{{ url('/lists/' . $foodList->getKey()) }}" method="POST">
                         @csrf
                         @method('PUT')
 
