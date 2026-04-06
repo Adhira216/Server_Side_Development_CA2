@@ -131,10 +131,21 @@
     align-items: center;
     padding: 0.65rem 0.9rem;
     border-radius: 999px;
+    border: 1px solid transparent;
     background: rgba(118, 80, 122, 0.08);
     color: var(--home-plum);
     font-size: 0.84rem;
     font-weight: 600;
+    text-decoration: none;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.sidebar-chip:hover,
+.sidebar-chip.active {
+    transform: translateY(-1px);
+    border-color: rgba(118, 80, 122, 0.18);
+    background: rgba(118, 80, 122, 0.14);
+    box-shadow: 0 12px 24px rgba(118, 80, 122, 0.1);
 }
 
 @media (max-width: 1080px) {
