@@ -97,6 +97,80 @@
             box-shadow: 0 10px 22px rgba(118, 80, 122, 0.08);
         }
 
+        .vote-panel {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.1rem;
+            border-radius: 22px;
+            border: 1px solid rgba(39, 50, 63, 0.08);
+            background: rgba(255, 255, 255, 0.76);
+        }
+
+        .vote-total {
+            display: grid;
+            gap: 0.2rem;
+        }
+
+        .vote-total strong {
+            font-size: 1.4rem;
+            line-height: 1;
+            color: var(--home-ink);
+        }
+
+        .vote-total span {
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--home-muted);
+        }
+
+        .vote-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .vote-form {
+            margin: 0;
+        }
+
+        .vote-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            min-height: 44px;
+            padding: 0.78rem 1rem;
+            border-radius: 999px;
+            border: 1px solid rgba(39, 50, 63, 0.08);
+            background: rgba(39, 50, 63, 0.04);
+            color: var(--home-ink);
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+        }
+
+        .vote-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(39, 50, 63, 0.08);
+        }
+
+        .vote-button.is-upvote-active {
+            border-color: rgba(67, 139, 97, 0.24);
+            background: linear-gradient(180deg, rgba(233, 248, 238, 0.95) 0%, rgba(245, 252, 247, 0.96) 100%);
+            color: #245c38;
+        }
+
+        .vote-button.is-downvote-active {
+            border-color: rgba(176, 89, 89, 0.22);
+            background: linear-gradient(180deg, rgba(253, 241, 241, 0.95) 0%, rgba(255, 247, 247, 0.96) 100%);
+            color: #8a3f3f;
+        }
+
         .detail-actions {
             display: flex;
             flex-wrap: wrap;
@@ -287,6 +361,40 @@
                         </div>
                     </div>
 
+                    <div class="detail-section">
+                        <p class="detail-section-label">Votes</p>
+                        <div class="vote-panel">
+                            <div class="vote-total">
+                                <strong>{{ $foodList->vote_total }}</strong>
+                                <span>{{ \Illuminate\Support\Str::plural('Vote', abs($foodList->vote_total)) }}</span>
+                            </div>
+
+                            <div class="vote-actions">
+                                <form action="{{ route('lists.upvote', $foodList) }}" method="POST" class="vote-form">
+                                    @csrf
+                                    <button
+                                        type="submit"
+                                        class="vote-button {{ $foodList->current_user_vote === 1 ? 'is-upvote-active' : '' }}"
+                                    >
+                                        <span aria-hidden="true">▲</span>
+                                        Upvote
+                                    </button>
+                                </form>
+
+                                <form action="{{ route('lists.downvote', $foodList) }}" method="POST" class="vote-form">
+                                    @csrf
+                                    <button
+                                        type="submit"
+                                        class="vote-button {{ $foodList->current_user_vote === -1 ? 'is-downvote-active' : '' }}"
+                                    >
+                                        <span aria-hidden="true">▼</span>
+                                        Downvote
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                     @if(!empty($foodList->tags))
                         <div class="detail-section">
                             <p class="detail-section-label">Tags</p>
@@ -299,7 +407,7 @@
                     @endif
 
                     <div class="detail-actions">
-                        @auth
+                        @if(auth()->id() === $foodList->user_id)
                             <div class="owner-actions">
                                 <a href="{{ url('/lists/' . $foodList->getKey() . '/edit') }}" class="action-button">
                                     Edit Food List
@@ -316,7 +424,7 @@
                                     <button type="button" class="delete-button" data-open-delete-modal>Delete Food List</button>
                                 </form>
                             </div>
-                        @endauth
+                        @endif
 
                         <a href="{{ route('lists.index') }}" class="detail-link">
                             <span aria-hidden="true">&larr;</span>
