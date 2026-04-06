@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $foodList->title }} | Food List</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('app-logo.svg') }}">
     <link rel="stylesheet" href="{{ asset('css/variables.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
@@ -82,8 +83,18 @@
         }
 
         .tag-pill {
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
             background: rgba(118, 80, 122, 0.08);
             color: var(--home-plum);
+        }
+
+        .tag-pill:hover {
+            transform: translateY(-1px);
+            border-color: rgba(118, 80, 122, 0.18);
+            background: rgba(118, 80, 122, 0.14);
+            box-shadow: 0 10px 22px rgba(118, 80, 122, 0.08);
         }
 
         .detail-actions {
@@ -281,7 +292,7 @@
                             <p class="detail-section-label">Tags</p>
                             <div class="tag-row">
                                 @foreach(array_filter(array_map('trim', explode(',', $foodList->tags))) as $tag)
-                                    <span class="tag-pill">{{ $tag }}</span>
+                                    <a href="{{ route('lists.index', ['search' => $tag]) }}" class="tag-pill">{{ $tag }}</a>
                                 @endforeach
                             </div>
                         </div>
