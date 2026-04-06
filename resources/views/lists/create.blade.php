@@ -53,6 +53,7 @@
                                 name="title"
                                 value="{{ old('title') }}"
                                 placeholder="Weekend meal plan"
+                                maxlength="255"
                                 required
                             >
                             @error('title')
@@ -81,6 +82,7 @@
                                 name="location"
                                 value="{{ old('location') }}"
                                 placeholder="Dublin"
+                                maxlength="255"
                                 required
                             >
                             @error('location')
@@ -96,7 +98,9 @@
                                 name="tags"
                                 value="{{ old('tags') }}"
                                 placeholder="brunch, pizza, casual"
+                                maxlength="255"
                             >
+                            <small>Separate tags with commas</small>
                             @error('tags')
                                 <div class="field-error">{{ $message }}</div>
                             @enderror
