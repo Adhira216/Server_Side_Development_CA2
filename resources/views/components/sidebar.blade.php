@@ -47,10 +47,18 @@
     <div class="sidebar-section">
         <span class="sidebar-section-label">Explore</span>
         <div class="sidebar-chip-wrap">
-            <span class="sidebar-chip">Weekend Plans</span>
-            <span class="sidebar-chip">Hidden Gems</span>
-            <span class="sidebar-chip">Brunch Trails</span>
-            <span class="sidebar-chip">Date Night</span>
+            @forelse ($commonTags as $tag)
+                <a
+                    href="{{ route('lists.index', ['search' => $tag]) }}"
+                    class="sidebar-chip {{ request()->routeIs('lists.index') && request('search') === $tag ? 'active' : '' }}"
+                >
+                    {{ $tag }}
+                </a>
+            @empty
+                <div class="sidebar-note">
+                    Tags from your food lists will appear here once lists include them.
+                </div>
+            @endforelse
         </div>
     </div>
 </aside>
