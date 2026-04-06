@@ -16,14 +16,13 @@ class FoodListController extends Controller
         $search = trim((string) $request->query('search', ''));
         $location = trim((string) $request->query('location', ''));
         $sort = (string) $request->query('sort', 'latest');
-
         $allowedSorts = ['latest', 'oldest', 'title_asc', 'title_desc'];
 
         if (!in_array($sort, $allowedSorts, true)) {
             $sort = 'latest';
         }
 
-        $foodLists = FoodList::query()
+        $foodListsQuery = FoodList::query()
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
@@ -35,14 +34,32 @@ class FoodListController extends Controller
             })
             ->when($location !== '', function ($query) use ($location) {
                 $query->where('location', 'like', "%{$location}%");
-            })
-            ->when($sort === 'oldest', fn ($query) => $query->oldest())
-            ->when($sort === 'title_asc', fn ($query) => $query->orderBy('title'))
-            ->when($sort === 'title_desc', fn ($query) => $query->orderByDesc('title'))
-            ->when($sort === 'latest', fn ($query) => $query->latest())
-            ->get();
+            });
 
-        return view('lists.index', compact('foodLists', 'search', 'location', 'sort'));
+        match ($sort) {
+            'oldest' => $foodListsQuery->oldest(),
+            'title_asc' => $foodListsQuery->orderBy('title'),
+            'title_desc' => $foodListsQuery->orderByDesc('title'),
+            default => $foodListsQuery->latest(),
+        };
+
+        $foodLists = $foodListsQuery->get();
+        $availableLocations = FoodList::query()
+            ->whereNotNull('location')
+            ->where('location', '!=', '')
+            ->orderBy('location')
+            ->distinct()
+            ->pluck('location');
+        $hasActiveFilters = $search !== '' || $location !== '' || $sort !== 'latest';
+
+        return view('lists.index', compact(
+            'foodLists',
+            'search',
+            'location',
+            'sort',
+            'availableLocations',
+            'hasActiveFilters',
+        ));
     }
 
     /**
