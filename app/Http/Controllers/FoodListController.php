@@ -64,6 +64,8 @@ class FoodListController extends Controller
      */
     public function edit(FoodList $list)
     {
+        abort_unless(auth()->id() === $list->user_id, 403);
+
         $foodList = $list;
 
         return view('lists.edit', compact('foodList'));
