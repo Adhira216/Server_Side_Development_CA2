@@ -288,7 +288,7 @@
                     @endif
 
                     <div class="detail-actions">
-                        @auth
+                        @if(auth()->id() === $foodList->user_id)
                             <div class="owner-actions">
                                 <a href="{{ url('/lists/' . $foodList->getKey() . '/edit') }}" class="action-button">
                                     Edit Food List
@@ -305,7 +305,7 @@
                                     <button type="button" class="delete-button" data-open-delete-modal>Delete Food List</button>
                                 </form>
                             </div>
-                        @endauth
+                        @endif
 
                         <a href="{{ route('lists.index') }}" class="detail-link">
                             <span aria-hidden="true">&larr;</span>
