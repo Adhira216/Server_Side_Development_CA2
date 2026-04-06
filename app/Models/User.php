@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\FoodListVote;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\FoodList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,5 +52,10 @@ class User extends Authenticatable
     public function foodLists(): HasMany
     {
         return $this->hasMany(FoodList::class);
+    }
+
+    public function foodListVotes(): HasMany
+    {
+        return $this->hasMany(FoodListVote::class);
     }
 }
