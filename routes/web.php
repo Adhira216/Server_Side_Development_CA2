@@ -25,3 +25,9 @@ Route::get('/dashboard', function ()
 })->middleware('auth');
 
 Route::resource('lists', FoodListController::class)->middleware('auth');
+Route::post('/lists/{list}/upvote', [FoodListController::class, 'upvote'])
+    ->middleware('auth')
+    ->name('lists.upvote');
+Route::post('/lists/{list}/downvote', [FoodListController::class, 'downvote'])
+    ->middleware('auth')
+    ->name('lists.downvote');
