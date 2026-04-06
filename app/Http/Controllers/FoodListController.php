@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FoodList;
+use App\Models\FoodListVote;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class FoodListController extends Controller
@@ -17,12 +19,19 @@ class FoodListController extends Controller
         $location = trim((string) $request->query('location', ''));
         $sort = (string) $request->query('sort', 'latest');
         $allowedSorts = ['latest', 'oldest', 'title_asc', 'title_desc'];
+        $userId = $request->user()->id;
 
         if (!in_array($sort, $allowedSorts, true)) {
             $sort = 'latest';
         }
 
         $foodListsQuery = FoodList::query()
+            ->withSum('foodListVotes as vote_total', 'value')
+            ->with([
+                'foodListVotes' => fn ($query) => $query
+                    ->where('user_id', $userId)
+                    ->select('id', 'food_list_id', 'user_id', 'value'),
+            ])
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
@@ -44,6 +53,11 @@ class FoodListController extends Controller
         };
 
         $foodLists = $foodListsQuery->get();
+        $foodLists->each(function (FoodList $foodList) {
+            $foodList->setAttribute('vote_total', (int) ($foodList->vote_total ?? 0));
+            $foodList->setAttribute('current_user_vote', (int) ($foodList->foodListVotes->first()->value ?? 0));
+        });
+
         $availableLocations = FoodList::query()
             ->whereNotNull('location')
             ->where('location', '!=', '')
@@ -98,7 +112,15 @@ class FoodListController extends Controller
      */
     public function show(FoodList $list)
     {
-        $foodList = $list;
+        $foodList = $list->loadSum('foodListVotes as vote_total', 'value')
+            ->load([
+                'foodListVotes' => fn ($query) => $query
+                    ->where('user_id', auth()->id())
+                    ->select('id', 'food_list_id', 'user_id', 'value'),
+            ]);
+
+        $foodList->setAttribute('vote_total', (int) ($foodList->vote_total ?? 0));
+        $foodList->setAttribute('current_user_vote', (int) ($foodList->foodListVotes->first()->value ?? 0));
 
         return view('lists.show', compact('foodList'));
     }
@@ -108,6 +130,8 @@ class FoodListController extends Controller
      */
     public function edit(FoodList $list)
     {
+        abort_unless(auth()->id() === $list->user_id, 403);
+
         $foodList = $list;
 
         return view('lists.edit', compact('foodList'));
@@ -144,5 +168,43 @@ class FoodListController extends Controller
 
         return redirect()->route('lists.index')
             ->with('success', 'Food list deleted successfully.');
+    }
+
+    public function upvote(Request $request, FoodList $list): RedirectResponse
+    {
+        return $this->toggleVote($request, $list, FoodListVote::UPVOTE);
+    }
+
+    public function downvote(Request $request, FoodList $list): RedirectResponse
+    {
+        return $this->toggleVote($request, $list, FoodListVote::DOWNVOTE);
+    }
+
+    private function toggleVote(Request $request, FoodList $list, int $value): RedirectResponse
+    {
+        $existingVote = FoodListVote::query()
+            ->where('user_id', $request->user()->id)
+            ->where('food_list_id', $list->id)
+            ->first();
+
+        if ($existingVote && $existingVote->value === $value) {
+            $existingVote->delete();
+
+            return back();
+        }
+
+        if ($existingVote) {
+            $existingVote->update(['value' => $value]);
+
+            return back();
+        }
+
+        FoodListVote::create([
+            'user_id' => $request->user()->id,
+            'food_list_id' => $list->id,
+            'value' => $value,
+        ]);
+
+        return back();
     }
 }
