@@ -11,11 +11,38 @@ class FoodListController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $foodLists = FoodList::latest()->get();
+        $search = trim((string) $request->query('search', ''));
+        $location = trim((string) $request->query('location', ''));
+        $sort = (string) $request->query('sort', 'latest');
 
-        return view('lists.index', compact('foodLists'));
+        $allowedSorts = ['latest', 'oldest', 'title_asc', 'title_desc'];
+
+        if (!in_array($sort, $allowedSorts, true)) {
+            $sort = 'latest';
+        }
+
+        $foodLists = FoodList::query()
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($searchQuery) use ($search) {
+                    $searchQuery
+                        ->where('title', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('location', 'like', "%{$search}%")
+                        ->orWhere('tags', 'like', "%{$search}%");
+                });
+            })
+            ->when($location !== '', function ($query) use ($location) {
+                $query->where('location', 'like', "%{$location}%");
+            })
+            ->when($sort === 'oldest', fn ($query) => $query->oldest())
+            ->when($sort === 'title_asc', fn ($query) => $query->orderBy('title'))
+            ->when($sort === 'title_desc', fn ($query) => $query->orderByDesc('title'))
+            ->when($sort === 'latest', fn ($query) => $query->latest())
+            ->get();
+
+        return view('lists.index', compact('foodLists', 'search', 'location', 'sort'));
     }
 
     /**
