@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Lists</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('app-logo.svg') }}">
     <link rel="stylesheet" href="{{ asset('css/variables.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
@@ -26,13 +27,16 @@
 
         .toolbar-panel {
             margin-bottom: 1.5rem;
-            padding: 1.4rem;
-            border-radius: 24px;
-            border: 1px solid rgba(39, 50, 63, 0.08);
+            padding: 1.5rem;
+            border-radius: 28px;
+            border: 1px solid rgba(39, 50, 63, 0.09);
             background:
-                radial-gradient(circle at top right, rgba(118, 80, 122, 0.08), transparent 32%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 249, 244, 0.98) 100%);
-            box-shadow: 0 18px 40px rgba(39, 50, 63, 0.08);
+                radial-gradient(circle at top right, rgba(118, 80, 122, 0.11), transparent 30%),
+                radial-gradient(circle at bottom left, rgba(214, 145, 109, 0.08), transparent 28%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 248, 241, 0.98) 100%);
+            box-shadow:
+                0 22px 48px rgba(39, 50, 63, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.65);
         }
 
         .toolbar-header {
@@ -46,7 +50,8 @@
 
         .toolbar-header h2 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 1.32rem;
+            font-family: 'Cormorant Garamond', serif;
             color: var(--home-ink);
         }
 
@@ -61,15 +66,63 @@
             gap: 1rem;
         }
 
+        .toolbar-topline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-bottom: 0.35rem;
+            color: var(--home-muted);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .toolbar-topline::before {
+            content: "";
+            width: 2.5rem;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(118, 80, 122, 0.5), rgba(118, 80, 122, 0.08));
+        }
+
         .toolbar-grid {
             display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr) minmax(180px, 1fr);
+            grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr) minmax(200px, 0.85fr);
             gap: 1rem;
         }
 
         .toolbar-field {
             display: grid;
             gap: 0.45rem;
+        }
+
+        .toolbar-field--search {
+            position: relative;
+        }
+
+        .toolbar-field--search::before {
+            content: "";
+            position: absolute;
+            top: 2.65rem;
+            left: 1rem;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(39, 50, 63, 0.42);
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        .toolbar-field--search::after {
+            content: "";
+            position: absolute;
+            top: 3.48rem;
+            left: 1.92rem;
+            width: 0.5rem;
+            height: 2px;
+            background: rgba(39, 50, 63, 0.42);
+            transform: rotate(45deg);
+            transform-origin: left center;
+            pointer-events: none;
         }
 
         .toolbar-field label {
@@ -83,21 +136,29 @@
         .toolbar-field input,
         .toolbar-field select {
             width: 100%;
-            min-height: 48px;
-            padding: 0.85rem 1rem;
+            min-height: 52px;
+            padding: 0.95rem 1rem;
             border: 1px solid rgba(39, 50, 63, 0.12);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.88);
             color: var(--home-ink);
             font: inherit;
-            transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+            transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+        }
+
+        .toolbar-field--search input {
+            padding-left: 2.8rem;
         }
 
         .toolbar-field input:focus,
         .toolbar-field select:focus {
             outline: none;
             border-color: rgba(118, 80, 122, 0.35);
-            box-shadow: 0 0 0 4px rgba(118, 80, 122, 0.08);
+            box-shadow:
+                0 0 0 4px rgba(118, 80, 122, 0.08),
+                0 14px 28px rgba(39, 50, 63, 0.08);
+            transform: translateY(-1px);
         }
 
         .toolbar-field input::placeholder {
@@ -135,6 +196,14 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
+            justify-content: space-between;
+            gap: 0.85rem;
+        }
+
+        .toolbar-actions-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
             gap: 0.85rem;
         }
 
@@ -143,18 +212,26 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 46px;
-            padding: 0.8rem 1.2rem;
+            min-height: 48px;
+            padding: 0.85rem 1.25rem;
             border-radius: 999px;
             font-weight: 700;
             text-decoration: none;
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
         }
 
         .toolbar-button {
             border: 1px solid transparent;
-            background: linear-gradient(180deg, rgba(118, 80, 122, 0.14) 0%, rgba(118, 80, 122, 0.22) 100%);
+            background: linear-gradient(180deg, rgba(118, 80, 122, 0.14) 0%, rgba(118, 80, 122, 0.24) 100%);
             color: var(--home-plum);
             cursor: pointer;
+            box-shadow: 0 16px 28px rgba(118, 80, 122, 0.12);
+        }
+
+        .toolbar-button:hover,
+        .toolbar-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 26px rgba(39, 50, 63, 0.08);
         }
 
         .toolbar-link {
@@ -164,8 +241,37 @@
         }
 
         .results-summary {
-            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(39, 50, 63, 0.08);
+            font-size: 0.88rem;
             color: var(--home-muted);
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+        }
+
+        .filter-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.55rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(118, 80, 122, 0.08);
+            color: var(--home-plum);
+            font-size: 0.82rem;
+            line-height: 1.2;
+        }
+
+        .filter-pill strong {
+            color: var(--home-ink);
         }
 
         .list-meta,
@@ -193,13 +299,39 @@
         }
 
         .tag-pill {
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
             background: rgba(118, 80, 122, 0.08);
             color: var(--home-plum);
+        }
+
+        .tag-pill:hover {
+            transform: translateY(-1px);
+            border-color: rgba(118, 80, 122, 0.18);
+            background: rgba(118, 80, 122, 0.14);
+            box-shadow: 0 10px 22px rgba(118, 80, 122, 0.08);
         }
 
         @media (max-width: 900px) {
             .toolbar-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .toolbar-actions {
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .toolbar-panel {
+                padding: 1.2rem;
+                border-radius: 22px;
+            }
+
+            .toolbar-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -235,6 +367,7 @@
                 <section class="toolbar-panel">
                     <div class="toolbar-header">
                         <div>
+                            <div class="toolbar-topline">Browse Intentionally</div>
                             <h2>Search and Filter</h2>
                             <p>Refine the collection by keyword, location, or sort order.</p>
                         </div>
@@ -245,7 +378,7 @@
 
                     <form action="{{ route('lists.index') }}" method="GET" class="toolbar-form">
                         <div class="toolbar-grid">
-                            <div class="toolbar-field">
+                            <div class="toolbar-field toolbar-field--search">
                                 <label for="search">Search</label>
                                 <input
                                     type="text"
@@ -258,13 +391,14 @@
 
                             <div class="toolbar-field">
                                 <label for="location">Location</label>
-                                <input
-                                    type="text"
-                                    id="location"
-                                    name="location"
-                                    value="{{ $location ?? '' }}"
-                                    placeholder="Filter by location"
-                                >
+                                <select id="location" name="location">
+                                    <option value="">All locations</option>
+                                    @foreach($availableLocations as $availableLocation)
+                                        <option value="{{ $availableLocation }}" @selected(($location ?? '') === $availableLocation)>
+                                            {{ $availableLocation }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="toolbar-field">
@@ -279,10 +413,36 @@
                         </div>
 
                         <div class="toolbar-actions">
-                            <button type="submit" class="toolbar-button">Apply filters</button>
+                            <div class="toolbar-actions-group">
+                                <button type="submit" class="toolbar-button">Apply filters</button>
 
-                            @if(($search ?? '') !== '' || ($location ?? '') !== '' || ($sort ?? 'latest') !== 'latest')
-                                <a href="{{ route('lists.index') }}" class="toolbar-link">Clear filters</a>
+                                @if($hasActiveFilters ?? false)
+                                    <a href="{{ route('lists.index') }}" class="toolbar-link">Clear filters</a>
+                                @endif
+                            </div>
+
+                            @if($hasActiveFilters ?? false)
+                                <div class="filter-pills">
+                                    @if(($search ?? '') !== '')
+                                        <span class="filter-pill"><strong>Search</strong> {{ $search }}</span>
+                                    @endif
+
+                                    @if(($location ?? '') !== '')
+                                        <span class="filter-pill"><strong>Location</strong> {{ $location }}</span>
+                                    @endif
+
+                                    @if(($sort ?? 'latest') !== 'latest')
+                                        <span class="filter-pill">
+                                            <strong>Sort</strong>
+                                            {{ match($sort) {
+                                                'oldest' => 'Oldest',
+                                                'title_asc' => 'Title A-Z',
+                                                'title_desc' => 'Title Z-A',
+                                                default => 'Latest',
+                                            } }}
+                                        </span>
+                                    @endif
+                                </div>
                             @endif
                         </div>
                     </form>
@@ -307,7 +467,7 @@
                                 @if(!empty($foodList->tags))
                                     <div class="tag-row">
                                         @foreach(array_filter(array_map('trim', explode(',', $foodList->tags))) as $tag)
-                                            <span class="tag-pill">{{ $tag }}</span>
+                                            <a href="{{ route('lists.index', ['search' => $tag]) }}" class="tag-pill">{{ $tag }}</a>
                                         @endforeach
                                     </div>
                                 @endif
