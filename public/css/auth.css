@@ -124,3 +124,51 @@
     vertical-align: middle;
     font-weight: 600;
 }
+
+/* Multi-select dropdown */
+.auth-container .field select[multiple] {
+    width: 100%;
+    min-height: 120px; /* similar to textarea */
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--home-line);
+    background: var(--danger-bg);
+    color: var(--home-ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    resize: vertical; /* allow resizing */
+}
+
+/* Focus state */
+.auth-container .field select[multiple]:focus {
+    outline: none;
+    border-color: var(--home-line);
+    background: var(--home-surface);
+}
+
+/* Option hover and selected */
+.auth-container .field select[multiple] option:hover {
+    background-color: rgba(140, 93, 139, 0.12);
+}
+
+.auth-container .field select[multiple] option:checked {
+    background-color: rgba(140, 93, 139, 0.25);
+    color: var(--home-plum);
+    font-weight: 600;
+}
+
+/* Label spacing */
+.auth-container .field label + select {
+    margin-bottom: 0.5rem;
+}
+
+/* Small helper text */
+.auth-container .field small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--home-muted);
+}
