@@ -92,6 +92,18 @@
                         </div>
 
                         <div class="field">
+                            <label for="restaurants">Restaurants</label>
+                            <select name="restaurants[]" id="restaurants" multiple>
+                                @foreach($restaurants as $restaurant)
+                                    <option value="{{ $restaurant->id }}">
+                                        {{ $restaurant->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small>Hold Ctrl (Cmd on Mac) to select multiple</small>
+                        </div>
+
+                        <div class="field">
                             <label for="tags">Tags</label>
                             <input
                                 type="text"
