@@ -39,6 +39,41 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.65);
         }
 
+        .mode-switcher {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            padding: 0.45rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(39, 50, 63, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        }
+
+        .mode-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0.72rem 1rem;
+            border-radius: 999px;
+            color: var(--home-muted);
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+        }
+
+        .mode-pill:hover {
+            transform: translateY(-1px);
+            color: var(--home-ink);
+        }
+
+        .mode-pill.is-active {
+            background: linear-gradient(180deg, rgba(118, 80, 122, 0.14) 0%, rgba(118, 80, 122, 0.24) 100%);
+            color: var(--home-plum);
+            box-shadow: 0 14px 24px rgba(118, 80, 122, 0.12);
+        }
+
         .toolbar-header {
             display: flex;
             flex-wrap: wrap;
@@ -421,14 +456,23 @@
                 <section class="content-panel section-intro">
                     <div class="section-copy">
                         <span class="eyebrow">Curated Collection</span>
-                        <h1 class="hero-title">Food Lists</h1>
-                        <p class="section-summary">
-                            Explore every saved food list in one place and discover collections built for planning, sharing, and revisiting great meals.
-                        </p>
+                        <h1 class="hero-title">{{ $pageTitle }}</h1>
+                        <p class="section-summary">{{ $pageSummary }}</p>
                     </div>
 
-                    <div class="view-switcher">
-                        <span class="switch-pill active">All Food Lists</span>
+                    <div class="mode-switcher" aria-label="List view switcher">
+                        <a
+                            href="{{ route('lists.index', array_filter(['view' => 'latest', 'search' => $search ?? '', 'location' => $location ?? '', 'sort' => $sort ?? 'latest'])) }}"
+                            class="mode-pill {{ ($view ?? 'latest') === 'latest' ? 'is-active' : '' }}"
+                        >
+                            Latest
+                        </a>
+                        <a
+                            href="{{ route('lists.index', array_filter(['view' => 'popular', 'search' => $search ?? '', 'location' => $location ?? '', 'sort' => $sort ?? 'latest'])) }}"
+                            class="mode-pill {{ ($view ?? 'latest') === 'popular' ? 'is-active' : '' }}"
+                        >
+                            Popular
+                        </a>
                     </div>
                 </section>
 
@@ -441,9 +485,13 @@
                 <section class="toolbar-panel">
                     <div class="toolbar-header">
                         <div>
-                            <div class="toolbar-topline">Browse Intentionally</div>
+                            <div class="toolbar-topline">{{ ($view ?? 'latest') === 'popular' ? 'Community Ranking' : 'Freshly Added' }}</div>
                             <h2>Search and Filter</h2>
-                            <p>Refine the collection by keyword, location, or sort order.</p>
+                            <p>
+                                {{ ($view ?? 'latest') === 'popular'
+                                    ? 'Refine the highest-ranked food lists by keyword, location, or a secondary sort.'
+                                    : 'Refine the newest food lists by keyword, location, or sort order.' }}
+                            </p>
                         </div>
                         <div class="results-summary">
                             {{ $foodLists->count() }} {{ \Illuminate\Support\Str::plural('result', $foodLists->count()) }}
@@ -451,6 +499,8 @@
                     </div>
 
                     <form action="{{ route('lists.index') }}" method="GET" class="toolbar-form">
+                        <input type="hidden" name="view" value="{{ $view ?? 'latest' }}">
+
                         <div class="toolbar-grid">
                             <div class="toolbar-field toolbar-field--search">
                                 <label for="search">Search</label>
@@ -491,7 +541,7 @@
                                 <button type="submit" class="toolbar-button">Apply filters</button>
 
                                 @if($hasActiveFilters ?? false)
-                                    <a href="{{ route('lists.index') }}" class="toolbar-link">Clear filters</a>
+                                    <a href="{{ route('lists.index', ['view' => $view ?? 'latest']) }}" class="toolbar-link">Clear filters</a>
                                 @endif
                             </div>
 
@@ -572,7 +622,7 @@
                                 @if(!empty($foodList->tags))
                                     <div class="tag-row">
                                         @foreach(array_filter(array_map('trim', explode(',', $foodList->tags))) as $tag)
-                                            <a href="{{ route('lists.index', ['search' => $tag]) }}" class="tag-pill">{{ $tag }}</a>
+                                            <a href="{{ route('lists.index', ['view' => $view ?? 'latest', 'search' => $tag]) }}" class="tag-pill">{{ $tag }}</a>
                                         @endforeach
                                     </div>
                                 @endif
