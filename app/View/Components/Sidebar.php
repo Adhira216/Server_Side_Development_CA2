@@ -7,7 +7,6 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class Sidebar extends Component
@@ -25,7 +24,6 @@ class Sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        $hasVotesColumn = Schema::hasColumn('food_lists', 'votes');
         $commonTags = FoodList::query()
             ->whereNotNull('tags')
             ->where('tags', '!=', '')
@@ -46,17 +44,15 @@ class Sidebar extends Component
         return view('components.sidebar', [
             'totalLists' => FoodList::count(),
             'popularLists' => FoodList::query()
-                ->when(
-                    $hasVotesColumn,
-                    fn ($query) => $query->orderByDesc('votes')->latest(),
-                    fn ($query) => $query->latest()
-                )
+                ->withSum('foodListVotes as vote_total', 'value')
+                ->orderByDesc('vote_total')
+                ->orderByDesc('created_at')
                 ->take(3)
                 ->get(),
-            'trendingCount' => $hasVotesColumn
-                ? FoodList::where('votes', '>', 0)->count()
-                : 0,
-            'hasVotesColumn' => $hasVotesColumn,
+            'trendingCount' => FoodList::query()
+                ->withSum('foodListVotes as vote_total', 'value')
+                ->having('vote_total', '>', 0)
+                ->count(),
             'commonTags' => $commonTags,
         ]);
     }
