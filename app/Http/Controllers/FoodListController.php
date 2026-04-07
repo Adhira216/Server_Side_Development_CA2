@@ -15,11 +15,17 @@ class FoodListController extends Controller
      */
     public function index(Request $request)
     {
+        $view = (string) $request->query('view', 'latest');
         $search = trim((string) $request->query('search', ''));
         $location = trim((string) $request->query('location', ''));
         $sort = (string) $request->query('sort', 'latest');
+        $allowedViews = ['latest', 'popular'];
         $allowedSorts = ['latest', 'oldest', 'title_asc', 'title_desc'];
         $userId = $request->user()->id;
+
+        if (!in_array($view, $allowedViews, true)) {
+            $view = 'latest';
+        }
 
         if (!in_array($sort, $allowedSorts, true)) {
             $sort = 'latest';
@@ -45,12 +51,17 @@ class FoodListController extends Controller
                 $query->where('location', 'like', "%{$location}%");
             });
 
-        match ($sort) {
-            'oldest' => $foodListsQuery->oldest(),
-            'title_asc' => $foodListsQuery->orderBy('title'),
-            'title_desc' => $foodListsQuery->orderByDesc('title'),
-            default => $foodListsQuery->latest(),
-        };
+        if ($view === 'popular' && $sort === 'latest') {
+            $foodListsQuery->orderByDesc('vote_total')
+                ->orderByDesc('created_at');
+        } else {
+            match ($sort) {
+                'oldest' => $foodListsQuery->oldest(),
+                'title_asc' => $foodListsQuery->orderBy('title'),
+                'title_desc' => $foodListsQuery->orderByDesc('title'),
+                default => $foodListsQuery->latest(),
+            };
+        }
 
         $foodLists = $foodListsQuery->get();
         $foodLists->each(function (FoodList $foodList) {
@@ -65,14 +76,21 @@ class FoodListController extends Controller
             ->distinct()
             ->pluck('location');
         $hasActiveFilters = $search !== '' || $location !== '' || $sort !== 'latest';
+        $pageTitle = $view === 'popular' ? 'Popular Food Lists' : 'Latest Food Lists';
+        $pageSummary = $view === 'popular'
+            ? 'Browse the food lists earning the strongest vote support from the community, with upvotes and downvotes shaping the ranking.'
+            : 'Explore the newest food lists first and discover fresh collections built for planning, sharing, and revisiting great meals.';
 
         return view('lists.index', compact(
             'foodLists',
+            'view',
             'search',
             'location',
             'sort',
             'availableLocations',
             'hasActiveFilters',
+            'pageTitle',
+            'pageSummary',
         ));
     }
 
