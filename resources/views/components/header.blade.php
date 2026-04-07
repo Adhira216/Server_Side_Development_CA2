@@ -34,6 +34,7 @@
 
                 @auth
                     <a href="{{ route('lists.index') }}" class="nav-pill subtle">My Lists</a>
+                    <a href="{{ route('restaurants.index') }}" class="nav-pill subtle">Restaurants</a>
                     <a href="{{ route('lists.create') }}" class="nav-pill accent">Create List</a>
                     <form method="POST" action="{{ route('logout') }}" class="inline-form">
                         @csrf
