@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FoodListController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,14 @@ Route::middleware('auth')->group(function ()
 {
     Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
     Route::get('/restaurants/{restaurant}', [RestaurantController::class, 'show'])->name('restaurants.show');
+});
+
+//Profile routes
+Route::middleware(['auth'])->group(function () 
+{
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::get('/dashboard', function () 
