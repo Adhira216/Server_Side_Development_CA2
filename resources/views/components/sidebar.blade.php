@@ -11,13 +11,13 @@
     <div class="sidebar-section">
         <span class="sidebar-section-label">Library</span>
         <nav class="sidebar-nav">
-            <a href="{{ route('lists.index') }}" class="{{ request()->routeIs('lists.index') && request('view', 'latest') !== 'popular' ? 'active' : '' }}">
-                <span>All Lists</span>
+            <a href="{{ route('lists.index', ['view' => 'latest']) }}" class="{{ request()->routeIs('lists.index') && request('view', 'latest') === 'latest' ? 'active' : '' }}">
+                <span>Latest Lists</span>
                 <strong>{{ $totalLists }}</strong>
             </a>
             <a href="{{ route('lists.index', ['view' => 'popular']) }}" class="{{ request()->routeIs('lists.index') && request('view') === 'popular' ? 'active' : '' }}">
                 <span>Popular Lists</span>
-                <strong>{{ $hasVotesColumn ? $trendingCount : 'Soon' }}</strong>
+                <strong>{{ $trendingCount }}</strong>
             </a>
             <a href="{{ route('lists.create') }}" class="{{ request()->routeIs('lists.create') ? 'active' : '' }}">
                 <span>Create List</span>
@@ -33,12 +33,12 @@
                 <a href="{{ route('lists.show', $popularList) }}" class="sidebar-mini-card">
                     <span class="mini-card-title">{{ $popularList->title }}</span>
                     <span class="mini-card-meta">
-                        {{ $hasVotesColumn ? $popularList->votes . ' votes' : 'Latest list' }}
+                        {{ (int) ($popularList->vote_total ?? 0) }} score
                     </span>
                 </a>
             @empty
                 <div class="sidebar-note">
-                    Popular food lists will appear here once votes are added to the app.
+                    Popular food lists will appear here once votes start shaping the rankings.
                 </div>
             @endforelse
         </div>
@@ -49,7 +49,7 @@
         <div class="sidebar-chip-wrap">
             @forelse ($commonTags as $tag)
                 <a
-                    href="{{ route('lists.index', ['search' => $tag]) }}"
+                    href="{{ route('lists.index', ['view' => request('view', 'latest'), 'search' => $tag]) }}"
                     class="sidebar-chip {{ request()->routeIs('lists.index') && request('search') === $tag ? 'active' : '' }}"
                 >
                     {{ $tag }}
