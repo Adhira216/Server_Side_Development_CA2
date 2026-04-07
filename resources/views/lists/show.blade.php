@@ -160,15 +160,15 @@
         }
 
         .vote-button.is-upvote-active {
-            border-color: rgba(67, 139, 97, 0.24);
-            background: linear-gradient(180deg, rgba(233, 248, 238, 0.95) 0%, rgba(245, 252, 247, 0.96) 100%);
-            color: #245c38;
+            border-color: rgba(143, 168, 134, 0.28);
+            background: linear-gradient(180deg, rgba(241, 247, 239, 0.98) 0%, rgba(249, 252, 247, 0.98) 100%);
+            color: #46624a;
         }
 
         .vote-button.is-downvote-active {
-            border-color: rgba(176, 89, 89, 0.22);
-            background: linear-gradient(180deg, rgba(253, 241, 241, 0.95) 0%, rgba(255, 247, 247, 0.96) 100%);
-            color: #8a3f3f;
+            border-color: rgba(118, 80, 122, 0.2);
+            background: linear-gradient(180deg, rgba(245, 240, 246, 0.98) 0%, rgba(251, 248, 251, 0.98) 100%);
+            color: #6a5370;
         }
 
         .detail-actions {

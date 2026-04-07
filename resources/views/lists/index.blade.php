@@ -333,6 +333,61 @@
             color: var(--home-ink);
         }
 
+        .lists-grid .list-card {
+            border: 1px solid rgba(39, 50, 63, 0.1);
+            background:
+                radial-gradient(circle at top right, rgba(118, 80, 122, 0.08), transparent 28%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 249, 244, 0.98) 100%);
+            box-shadow:
+                0 18px 38px rgba(39, 50, 63, 0.07),
+                inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        }
+
+        .lists-grid .list-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(118, 80, 122, 0.16), rgba(210, 169, 134, 0.08), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .lists-grid .list-card::after {
+            background: radial-gradient(circle, rgba(118, 80, 122, 0.12), transparent 70%);
+            opacity: 0.9;
+        }
+
+        .lists-grid .list-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(118, 80, 122, 0.16);
+            box-shadow:
+                0 24px 52px rgba(39, 50, 63, 0.1),
+                0 8px 20px rgba(118, 80, 122, 0.06);
+        }
+
+        .lists-grid .list-card h2 {
+            color: var(--home-ink);
+            line-height: 1.06;
+        }
+
+        .lists-grid .list-card p {
+            color: var(--home-muted);
+        }
+
+        .lists-grid .card-link {
+            color: var(--home-ink);
+            text-decoration: none;
+        }
+
+        .lists-grid .card-link:hover {
+            color: var(--home-plum);
+        }
+
         .vote-panel {
             position: relative;
             z-index: 1;
@@ -396,15 +451,15 @@
         }
 
         .vote-button.is-upvote-active {
-            border-color: rgba(67, 139, 97, 0.24);
-            background: linear-gradient(180deg, rgba(233, 248, 238, 0.95) 0%, rgba(245, 252, 247, 0.96) 100%);
-            color: #245c38;
+            border-color: rgba(143, 168, 134, 0.28);
+            background: linear-gradient(180deg, rgba(241, 247, 239, 0.98) 0%, rgba(249, 252, 247, 0.98) 100%);
+            color: #46624a;
         }
 
         .vote-button.is-downvote-active {
-            border-color: rgba(176, 89, 89, 0.22);
-            background: linear-gradient(180deg, rgba(253, 241, 241, 0.95) 0%, rgba(255, 247, 247, 0.96) 100%);
-            color: #8a3f3f;
+            border-color: rgba(118, 80, 122, 0.2);
+            background: linear-gradient(180deg, rgba(245, 240, 246, 0.98) 0%, rgba(251, 248, 251, 0.98) 100%);
+            color: #6a5370;
         }
 
         .tag-pill {
