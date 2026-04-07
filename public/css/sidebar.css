@@ -78,7 +78,7 @@
     justify-content: space-between;
     gap: 1rem;
     padding: 0.9rem 1rem;
-    border-radius: 18px;
+    border-radius: 24px;
     text-decoration: none;
     color: var(--home-ink);
     border: 1px solid transparent;
@@ -113,7 +113,7 @@
 
 .sidebar-note {
     padding: 1rem;
-    border-radius: 18px;
+    border-radius: 24px;
     background: rgba(255, 255, 255, 0.68);
     color: var(--home-muted);
     line-height: 1.7;

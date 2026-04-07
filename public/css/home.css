@@ -191,7 +191,7 @@
 
 .stat-card {
     padding: 1rem;
-    border-radius: 18px;
+    border-radius: 24px;
     background: rgba(255, 255, 255, 0.74);
     border: 1px solid rgba(39, 50, 63, 0.08);
 }
@@ -280,7 +280,7 @@
     z-index: 3;
     max-width: 220px;
     padding: 1rem 1.1rem;
-    border-radius: 18px;
+    border-radius: 24px;
     background: rgba(255, 255, 255, 0.84);
     border: 1px solid rgba(39, 50, 63, 0.08);
     backdrop-filter: blur(12px);
@@ -484,7 +484,7 @@
 
 .feature-card {
     padding: 1.4rem;
-    border-radius: 18px;
+    border-radius: 24px;
     border: 1px solid var(--home-line);
     background: var(--home-panel);
 }
