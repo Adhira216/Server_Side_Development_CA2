@@ -27,4 +27,9 @@ class FoodList extends Model
     {
         return $this->hasMany(FoodListVote::class);
     }
+
+    public function restaurants()
+    {
+        return $this->belongsToMany(Restaurant::class, 'list_restaurant', 'list_id', 'restaurant_id');
+    }
 }
