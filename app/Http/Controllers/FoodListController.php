@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
 use App\Models\FoodList;
 use App\Models\FoodListVote;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,7 @@ class FoodListController extends Controller
         $view = (string) $request->query('view', 'latest');
         $search = trim((string) $request->query('search', ''));
         $location = trim((string) $request->query('location', ''));
+        $restaurantId = (int) $request->query('restaurant', 0);
         $sort = (string) $request->query('sort', 'latest');
         $allowedViews = ['latest', 'popular'];
         $allowedSorts = ['latest', 'oldest', 'title_asc', 'title_desc'];
@@ -32,12 +34,13 @@ class FoodListController extends Controller
         }
 
         $foodListsQuery = FoodList::query()
-            ->withSum('foodListVotes as vote_total', 'value')
-            ->with([
-                'foodListVotes' => fn ($query) => $query
-                    ->where('user_id', $userId)
-                    ->select('id', 'food_list_id', 'user_id', 'value'),
-            ])
+        ->withSum('foodListVotes as vote_total', 'value')
+        ->with([
+            'foodListVotes' => fn ($query) => $query
+                ->where('user_id', $userId)
+                ->select('id', 'food_list_id', 'user_id', 'value'),
+            'restaurants', 
+        ])
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
@@ -49,6 +52,9 @@ class FoodListController extends Controller
             })
             ->when($location !== '', function ($query) use ($location) {
                 $query->where('location', 'like', "%{$location}%");
+            })
+            ->when($restaurantId > 0, function ($query) use ($restaurantId) { // <-- new
+            $query->whereHas('restaurants', fn($q) => $q->where('restaurants.id', $restaurantId));
             });
 
         if ($view === 'popular' && $sort === 'latest') {
@@ -69,6 +75,9 @@ class FoodListController extends Controller
             $foodList->setAttribute('current_user_vote', (int) ($foodList->foodListVotes->first()->value ?? 0));
         });
 
+        // pass restaurants for filter dropdown
+        $restaurants = Restaurant::orderBy('name')->get();
+
         $availableLocations = FoodList::query()
             ->whereNotNull('location')
             ->where('location', '!=', '')
@@ -86,8 +95,10 @@ class FoodListController extends Controller
             'view',
             'search',
             'location',
+            'restaurantId',
             'sort',
             'availableLocations',
+            'restaurants',
             'hasActiveFilters',
             'pageTitle',
             'pageSummary',
@@ -99,7 +110,8 @@ class FoodListController extends Controller
      */
     public function create()
     {
-        return view('lists.create');
+        $restaurants = Restaurant::all(); // get all restaurants
+        return view('lists.create', compact('restaurants'));
     }
 
     /**
@@ -112,15 +124,23 @@ class FoodListController extends Controller
             'description' => 'required|string',
             'location' => 'required|string|max:255',
             'tags' => 'nullable|string|max:255',
+            'restaurants' => 'nullable|array',
+            'restaurants.*' => 'exists:restaurants,id',
         ]);
 
-        FoodList::create([
+        // Create the food list
+        $foodList = FoodList::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
             'location' => $validated['location'],
             'tags' => $validated['tags'],
             'user_id' => $request->user()->id,
         ]);
+
+        // Sync selected restaurants (many-to-many pivot)
+        if (!empty($validated['restaurants'])) {
+            $foodList->restaurants()->sync($validated['restaurants']);
+        }
 
         return redirect()->route('lists.index')->with('success', 'Food list created successfully.');
     }
@@ -150,9 +170,10 @@ class FoodListController extends Controller
     {
         abort_unless(auth()->id() === $list->user_id, 403);
 
-        $foodList = $list;
+        $foodList = $list->load('restaurants'); // <-- load associated restaurants
+        $restaurants = Restaurant::all();        // <-- all restaurants for dropdown
 
-        return view('lists.edit', compact('foodList'));
+        return view('lists.edit', compact('foodList', 'restaurants'));
     }
 
     /**
@@ -167,9 +188,14 @@ class FoodListController extends Controller
             'description' => 'required|string',
             'location' => 'required|string|max:255',
             'tags' => 'nullable|string|max:255',
+            'restaurants' => 'nullable|array',
+            'restaurants.*' => 'exists:restaurants,id',
         ]);
 
         $list->update($validated);
+
+        // Sync restaurants
+        $list->restaurants()->sync($validated['restaurants'] ?? []);
 
         return redirect()->to('/lists/' . $list->getKey())
             ->with('success', 'Food list updated successfully.');
