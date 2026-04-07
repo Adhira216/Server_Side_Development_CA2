@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FoodListController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RestaurantController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+//Restaurant routes
+Route::middleware('auth')->group(function () 
+{
+    Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
+    Route::get('/restaurants/{restaurant}', [RestaurantController::class, 'show'])->name('restaurants.show');
+});
 
 Route::get('/dashboard', function () 
 {
