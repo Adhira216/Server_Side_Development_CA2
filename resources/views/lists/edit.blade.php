@@ -108,6 +108,23 @@
                             @enderror
                         </div>
 
+                        <div class="field">
+                            <label for="restaurants">Restaurants</label>
+                            <select name="restaurants[]" id="restaurants" multiple>
+                                @foreach($restaurants as $restaurant)
+                                    <option value="{{ $restaurant->id }}"
+                                        @selected($foodList->restaurants->contains($restaurant->id))
+                                    >
+                                        {{ $restaurant->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small>Hold Ctrl (Cmd on Mac) to select multiple restaurants</small>
+                            @error('restaurants')
+                                <div class="field-error">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <div class="actions">
                             <button type="submit">Update Food List</button>
                             <a href="{{ route('lists.index') }}" class="link">Back to all lists</a>
