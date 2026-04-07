@@ -406,6 +406,17 @@
                         </div>
                     @endif
 
+                    @if($foodList->restaurants->count())
+                        <div class="detail-section">
+                            <p class="detail-section-label">Restaurants</p>
+                            <div class="tag-row">
+                                @foreach($foodList->restaurants as $restaurant)
+                                    <span class="tag-pill restaurant-pill">{{ $restaurant->name }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="detail-actions">
                         @if(auth()->id() === $foodList->user_id)
                             <div class="owner-actions">
