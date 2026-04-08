@@ -12,6 +12,7 @@ class Restaurant extends Model
         'name',
         'location',
         'cuisine_type',
+        'description', 
     ];
 
     // Relationship to FoodList (many-to-many)
