@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/variables.css') }}">
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
     <div class="sidebar-head">
         <p class="sidebar-kicker">TasteTrail</p>
         <h2 class="sidebar-title">Browse Lists</h2>

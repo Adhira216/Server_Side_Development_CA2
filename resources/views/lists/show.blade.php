@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <script>
+    function toggleSidebar() 
+    {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
+</script>
 </head>
 <body class="home-page-body">
 
@@ -16,6 +22,11 @@
 
     <div class="home-page">
         <div class="home-layout">
+            <button class="hamburger" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <x-sidebar />
 
             <main class="home-main">
