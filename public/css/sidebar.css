@@ -154,3 +154,58 @@
         max-height: none;
     }
 }
+
+.hamburger {
+    display: none;
+}
+
+
+@media (max-width: 1024px) {
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 44px;
+        height: 44px;
+
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+
+        z-index: 3000;
+
+        border-radius: 12px;
+        border: 1px solid rgba(39, 50, 63, 0.08);
+        background: rgba(255, 255, 255, 0.9);
+
+        box-shadow: 0 10px 25px rgba(39, 50, 63, 0.1);
+        cursor: pointer;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 75%;
+        max-width: 300px;
+        transition: left 0.3s ease;
+        z-index: 2000;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+}
+
+.hamburger span {
+    width: 20px;
+    height: 2px;
+    background: var(--home-ink);
+    border-radius: 2px;
+}
