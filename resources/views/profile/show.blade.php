@@ -88,7 +88,7 @@
 
                                 <div class="tag-row">
                                     <p><strong>Restaurants</strong></p>
-                                    @if($foodList->relationLoaded('restaurants') && $foodList->restaurants->count())
+                                    @if($foodList->restaurants->count())
                                         @foreach($foodList->restaurants as $restaurant)
                                             <a href="{{ route('restaurants.show', $restaurant) }}" class="tag-pill restaurant-pill">
                                                 {{ $restaurant->name }}
