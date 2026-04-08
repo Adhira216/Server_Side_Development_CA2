@@ -72,6 +72,16 @@
                             </div>
                         </div>
 
+                        {{-- DESCRIPTION --}}
+                        @if($restaurant->description)
+                            <div class="restaurant-section">
+                                <span class="restaurant-label">Description</span>
+                                <p class="restaurant-description">
+                                    {{ $restaurant->description }}
+                                </p>
+                            </div>
+                        @endif
+
                         {{-- FOOD LISTS --}}
                         @if($restaurant->foodLists->count())
                             <div class="restaurant-section">
