@@ -1,16 +1,18 @@
 # TasteTrail – Food List Web Application
+TasteTrail is a web application designed to help users discover restaurant and food recommendations through curated lists created by other users. Instead of focusing only on individual restaurant reviews, this platform focuses on list-based discovery, where users can create themed collections of restaurant recommendations.  
+These lists allow users to share curated food experiences, making it easier for others to quickly find recommendations that match their taste.  
 
-TasteTrail is a Laravel-based web application that helps users discover restaurants through curated food lists created by other users.
-Unlike traditional review platforms, TasteTrail focuses on list-based discovery, allowing users to explore themed collections.
+Many existing food platforms focus on reviewing individual restaurants, while being useful this can often require users to find grouped recommendations tailored to particular preferences. TasteTrail solves this problem by allowing users to browse lists of restaurant recommendations organised by themes and tags. It allows users to create and customise their own collections of restaurant recommendations.
+
 ## Features
-- User authentication (register/login)
-- Create, edit, and delete food lists
-- Add restaurants to a list
-- Tag system (e.g. spicy, sweet, budget-friendly)
-- Upvote/downvote system
-- Public feed of food lists
-- View detailed list pages with restaurants
-- User profiles
+- User authentication (register and login)
+- CRUD functionality for creating, editing, and deleting lists
+- Ability to add restaurants or places to lists
+- Public feed where users can browse and scroll through lists
+- Tag system to categorise lists (e.g. spicy, sweet, budget)
+- Upvote and downvote system to rank lists
+- Form validation and error handling
+- Viewing individual list pages with restaurant details
 
 # Installation
 
@@ -61,7 +63,8 @@ php artisan key:generate
 
 ### 8. Create a new empty database
 
-This project is using MySQL. Open your DBMS and create a database called `ssd_ca2`.
+This project is using MySQL.  
+**Open your DBMS and create a database called** `ssd_ca2`.  
 You can check the migrations to see all the tables that will be created.
 
 ### 9. Migrate the database
@@ -74,7 +77,7 @@ php artisan migrate:fresh --seed
 ```
 php artisan serve
 ```
-Visit:
+**Visit:**
 ```
 http://127.0.0.1:8000
 ```
