@@ -135,6 +135,8 @@
         </div>
     </div>
 
+    <x-footer />
+
     <script>
         const slides = [
             {
