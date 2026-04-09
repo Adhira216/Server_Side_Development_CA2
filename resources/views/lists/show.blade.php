@@ -146,6 +146,8 @@
         </div>
     </div>
 
+    <x-footer />
+
     <div class="modal-backdrop" id="deleteConfirmModal" aria-hidden="true">
         <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="deleteConfirmTitle">
             <h3 id="deleteConfirmTitle">Delete this food list?</h3>
