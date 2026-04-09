@@ -75,5 +75,7 @@
         </main>
     </div>
 
+    <x-footer />
+
 </body>
 </html>
