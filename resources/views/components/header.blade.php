@@ -36,7 +36,13 @@
                     <a href="{{ route('lists.index') }}" class="nav-pill subtle">Lists</a>
                     <a href="{{ route('restaurants.index') }}" class="nav-pill subtle">Restaurants</a>
                     <a href="{{ route('lists.create') }}" class="nav-pill accent">Create List</a>
-                    <a href="{{ route('profile.show') }}" class="nav-pill subtle">Profile</a>
+                    <a href="{{ route('profile.show') }}" class="profile-chip" aria-label="Open profile">
+                        <img src="{{ auth()->user()->profile_image_url }}" alt="{{ auth()->user()->name }} avatar" class="profile-chip-avatar">
+                        <span class="profile-chip-copy">
+                            <small>Profile</small>
+                            <strong>{{ auth()->user()->name }}</strong>
+                        </span>
+                    </a>
                     <form method="POST" action="{{ route('logout') }}" class="inline-form">
                         @csrf
                         <button type="submit" class="nav-pill subtle nav-button">Logout</button>
