@@ -7,22 +7,45 @@ use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
-    /**
-     * Display a listing of all restaurants.
-     */
     public function index()
     {
-        $restaurants = Restaurant::all(); // fetch all restaurants
+        $restaurants = Restaurant::query()
+            ->withCount('foodLists')
+            ->latest()
+            ->get();
+
         return view('restaurants.index', compact('restaurants'));
     }
 
-    /**
-     * Display a single restaurant.
-     */
+    public function create()
+    {
+        abort(404);
+    }
+
+    public function store(Request $request)
+    {
+        abort(404);
+    }
+
     public function show(Restaurant $restaurant)
     {
         $restaurant->load('foodLists');
 
         return view('restaurants.show', compact('restaurant'));
+    }
+
+    public function edit(Restaurant $restaurant)
+    {
+        abort(404);
+    }
+
+    public function update(Request $request, Restaurant $restaurant)
+    {
+        abort(404);
+    }
+
+    public function destroy(Restaurant $restaurant)
+    {
+        abort(404);
     }
 }
