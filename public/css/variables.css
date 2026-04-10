@@ -1,3 +1,5 @@
+/* Global CSS Variables */
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap');
 
 :root {
@@ -22,22 +24,8 @@
     --home-muted: #6b7280;
     --home-line: rgba(39, 50, 63, 0.09);
     --home-plum: #76507a;
-
-    /* --home-apricot: #d79a70;
-    --home-sage: #8fa886;
-    --home-rose: #d8b3b8; */
-
-    /* --home-shadow: 0 28px 70px rgba(46, 50, 58, 0.12); */
 }
 
 * {
     box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: 'Manrope', sans-serif;
-    color: var(--text);
-    background: var(--bg);
 }

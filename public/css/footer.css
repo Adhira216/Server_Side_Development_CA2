@@ -1,3 +1,5 @@
+/* Footer Styling */
+
 @import url('variables.css');
 
 .site-footer-wrap {
@@ -16,19 +18,6 @@
         radial-gradient(circle at bottom left, rgba(215, 154, 112, 0.12), transparent 28%),
         linear-gradient(135deg, rgba(255, 255, 255, 0.5), transparent 38%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 249, 244, 0.98) 100%);
-    box-shadow:
-        0 28px 64px rgba(39, 50, 63, 0.09),
-        0 10px 28px rgba(118, 80, 122, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.72);
-}
-
-.site-footer::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(118, 80, 122, 0.6), rgba(215, 154, 112, 0.42), rgba(143, 168, 134, 0.22), transparent 86%);
 }
 
 .site-footer::after {
