@@ -1,3 +1,5 @@
+/* Sidebar Styling */
+
 @import url('variables.css');
 
 .sidebar {
@@ -9,7 +11,6 @@
     border-radius: 24px;
     border: 1px solid rgba(39, 50, 63, 0.08);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 250, 245, 0.96) 100%);
-    box-shadow: 0 22px 48px rgba(39, 50, 63, 0.08);
     backdrop-filter: blur(18px);
     padding: 1.4rem;
     display: flex;

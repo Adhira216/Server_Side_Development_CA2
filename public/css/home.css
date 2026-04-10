@@ -1,3 +1,5 @@
+/* Home Page Styling */
+
 @import url('variables.css');
 
 .home-page-body {
@@ -29,7 +31,6 @@
     border-radius: 24px;
     border: 1px solid var(--home-line);
     background: var(--home-surface);
-    box-shadow: 0 24px 54px rgba(39, 50, 63, 0.08);
     min-height: 720px;
 }
 
@@ -312,7 +313,6 @@
     border-radius: 24px;
     border: 1px solid var(--home-line);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 251, 246, 0.95) 100%);
-    box-shadow: 0 20px 46px rgba(39, 50, 63, 0.07);
 }
 
 .section-intro {
@@ -380,8 +380,7 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 249, 244, 0.94) 100%);
     color: var(--home-ink);
     text-decoration: none;
-    box-shadow: 0 18px 40px rgba(39, 50, 63, 0.06);
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    transition: transform 180ms ease, border-color 180ms ease;
 }
 
 .list-card::after {
@@ -398,7 +397,6 @@
 .list-card:hover {
     transform: translateY(-4px);
     border-color: rgba(118, 80, 122, 0.18);
-    box-shadow: 0 24px 48px rgba(39, 50, 63, 0.10);
 }
 
 .list-card-top {
