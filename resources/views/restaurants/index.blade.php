@@ -57,18 +57,18 @@
                                         'Vegan' => 'vegan.jpg',
                                     ];
 
-                                    $imageFile = $cuisineImages[$restaurant->cuisine_type] ?? 'placeholder.jpg';
+                                    $imageFile = $cuisineImages[$restaurant->cuisine] ?? 'placeholder.jpg';
                                 @endphp
 
                                 @if(file_exists(public_path("images/restaurants/{$imageFile}")))
                                     <img src="{{ asset("images/restaurants/{$imageFile}") }}"
-                                        alt="{{ $restaurant->cuisine_type ?? 'Restaurant Image' }}"
+                                        alt="{{ $restaurant->cuisine ?? 'Restaurant Image' }}"
                                         style="width:100%; border-radius:10px; margin-bottom:0.75rem; object-fit:cover; height:180px;">
                                 @endif
 
                                 <div class="list-card-top">
                                     <span class="list-count">Restaurant</span>
-                                    <span class="vote-pill">{{ $restaurant->cuisine_type ?? 'Cuisine N/A' }}</span>
+                                    <span class="vote-pill">{{ $restaurant->cuisine ?? 'Cuisine N/A' }}</span>
                                 </div>
 
                                 <h2>{{ $restaurant->name }}</h2>
