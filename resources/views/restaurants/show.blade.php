@@ -56,13 +56,13 @@
                             'Vegan' => 'vegan.jpg',
                         ];
 
-                        $imageFile = $cuisineImages[$restaurant->cuisine_type] ?? 'placeholder.jpg';
+                        $imageFile = $cuisineImages[$restaurant->cuisine] ?? 'placeholder.jpg';
                     @endphp
 
                     @if(file_exists(public_path("images/restaurants/{$imageFile}")))
                         <img 
                             src="{{ asset("images/restaurants/{$imageFile}") }}"
-                            alt="{{ $restaurant->cuisine_type }}"
+                            alt="{{ $restaurant->cuisine }}"
                             class="restaurant-card-image"
                         >
                     @endif
@@ -72,7 +72,7 @@
                         {{-- HEADER --}}
                         <div class="restaurant-card-head">
                             <h2>{{ $restaurant->name }}</h2>
-                            <span class="restaurant-pill">{{ $restaurant->cuisine_type ?? 'N/A' }}</span>
+                            <span class="restaurant-pill">{{ $restaurant->cuisine ?? 'N/A' }}</span>
                         </div>
 
                         {{-- LOCATION --}}
