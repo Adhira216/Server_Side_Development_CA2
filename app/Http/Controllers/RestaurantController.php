@@ -9,14 +9,62 @@ use Illuminate\View\View;
 
 class RestaurantController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
+        $search = trim((string) $request->query('search', ''));
+        $location = trim((string) $request->query('location', ''));
+        $cuisine = trim((string) $request->query('cuisine', ''));
+        $sort = (string) $request->query('sort', 'latest');
+        $allowedSorts = ['latest', 'name_asc', 'rating_desc'];
+
+        if (!in_array($sort, $allowedSorts, true)) {
+            $sort = 'latest';
+        }
+
         $restaurants = Restaurant::query()
             ->withCount('foodLists')
-            ->latest()
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($searchQuery) use ($search) {
+                    $searchQuery
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('location', 'like', "%{$search}%")
+                        ->orWhere('cuisine', 'like', "%{$search}%");
+                });
+            })
+            ->when($location !== '', fn ($query) => $query->where('location', $location))
+            ->when($cuisine !== '', fn ($query) => $query->where('cuisine', $cuisine))
+            ->when($sort === 'name_asc', fn ($query) => $query->orderBy('name'))
+            ->when($sort === 'rating_desc', fn ($query) => $query->orderByDesc('rating')->orderBy('name'))
+            ->when($sort === 'latest', fn ($query) => $query->latest())
             ->get();
 
-        return view('restaurants.index', compact('restaurants'));
+        $availableLocations = Restaurant::query()
+            ->whereNotNull('location')
+            ->where('location', '!=', '')
+            ->orderBy('location')
+            ->distinct()
+            ->pluck('location');
+
+        $availableCuisines = Restaurant::query()
+            ->whereNotNull('cuisine')
+            ->where('cuisine', '!=', '')
+            ->orderBy('cuisine')
+            ->distinct()
+            ->pluck('cuisine');
+
+        $hasActiveFilters = $search !== '' || $location !== '' || $cuisine !== '' || $sort !== 'latest';
+
+        return view('restaurants.index', compact(
+            'restaurants',
+            'search',
+            'location',
+            'cuisine',
+            'sort',
+            'availableLocations',
+            'availableCuisines',
+            'hasActiveFilters',
+        ));
     }
 
     public function create(): View
