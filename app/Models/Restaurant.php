@@ -7,17 +7,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Restaurant extends Model
 {
-    // Mass assignable attributes
     protected $fillable = [
         'name',
+        'description',
         'location',
-        'cuisine_type',
-        'description', 
+        'cuisine',
+        'price_range',
+        'rating',
+        'opening_hours',
+        'phone',
+        'website',
+        'image_url',
+        'menu_highlights',
     ];
 
-    // Relationship to FoodList (many-to-many)
     public function foodLists(): BelongsToMany
     {
-        return $this->belongsToMany(FoodList::class, 'list_restaurant', 'restaurant_id', 'list_id');
+        return $this->belongsToMany(FoodList::class);
     }
 }
