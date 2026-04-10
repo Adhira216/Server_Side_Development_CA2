@@ -53,6 +53,87 @@
                     </section>
                 @endif
 
+                <section class="toolbar-panel restaurant-toolbar-panel">
+                    <div class="toolbar-header">
+                        <div>
+                            <div class="toolbar-topline">Discovery Controls</div>
+                            <h2>Search and Refine</h2>
+                            <p>Filter the restaurant directory by name, location, cuisine, or sort order without leaving the TasteTrail browsing flow.</p>
+                        </div>
+                        <div class="results-summary">{{ $restaurants->count() }} {{ \Illuminate\Support\Str::plural('restaurant', $restaurants->count()) }}</div>
+                    </div>
+
+                    <form action="{{ route('restaurants.index') }}" method="GET" class="toolbar-form">
+                        <div class="toolbar-grid restaurant-toolbar-grid">
+                            <div class="toolbar-field toolbar-field--search">
+                                <label for="search">Search</label>
+                                <input
+                                    type="text"
+                                    id="search"
+                                    name="search"
+                                    value="{{ $search ?? '' }}"
+                                    placeholder="Search by name, description, location, or cuisine"
+                                >
+                            </div>
+
+                            <div class="toolbar-field">
+                                <label for="location">Location</label>
+                                <select id="location" name="location">
+                                    <option value="">All locations</option>
+                                    @foreach($availableLocations as $availableLocation)
+                                        <option value="{{ $availableLocation }}" @selected(($location ?? '') === $availableLocation)>{{ $availableLocation }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="toolbar-field">
+                                <label for="cuisine">Cuisine</label>
+                                <select id="cuisine" name="cuisine">
+                                    <option value="">All cuisines</option>
+                                    @foreach($availableCuisines as $availableCuisine)
+                                        <option value="{{ $availableCuisine }}" @selected(($cuisine ?? '') === $availableCuisine)>{{ $availableCuisine }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="toolbar-field">
+                                <label for="sort">Sort</label>
+                                <select id="sort" name="sort">
+                                    <option value="latest" @selected(($sort ?? 'latest') === 'latest')>Latest</option>
+                                    <option value="name_asc" @selected(($sort ?? '') === 'name_asc')>Name A-Z</option>
+                                    <option value="rating_desc" @selected(($sort ?? '') === 'rating_desc')>Top Rated</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="toolbar-actions">
+                            <div class="toolbar-actions-group">
+                                <button type="submit" class="toolbar-button">Apply filters</button>
+                                @if($hasActiveFilters ?? false)
+                                    <a href="{{ route('restaurants.index') }}" class="toolbar-link">Clear filters</a>
+                                @endif
+                            </div>
+
+                            @if($hasActiveFilters ?? false)
+                                <div class="filter-pills">
+                                    @if(($search ?? '') !== '')
+                                        <span class="filter-pill"><strong>Search</strong> {{ $search }}</span>
+                                    @endif
+                                    @if(($location ?? '') !== '')
+                                        <span class="filter-pill"><strong>Location</strong> {{ $location }}</span>
+                                    @endif
+                                    @if(($cuisine ?? '') !== '')
+                                        <span class="filter-pill"><strong>Cuisine</strong> {{ $cuisine }}</span>
+                                    @endif
+                                    @if(($sort ?? 'latest') !== 'latest')
+                                        <span class="filter-pill"><strong>Sort</strong> {{ $sort === 'rating_desc' ? 'Top Rated' : 'Name A-Z' }}</span>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
+                    </form>
+                </section>
+
                 @if($restaurants->count())
                     <section class="lists-grid">
                         @foreach($restaurants as $restaurant)
@@ -73,6 +154,7 @@
                                 </div>
 
                                 <h2>{{ $restaurant->name }}</h2>
+                                <p class="restaurant-card-subtitle">{{ $restaurant->location }}</p>
                                 <p>{{ \Illuminate\Support\Str::limit($restaurant->description, 145) }}</p>
 
                                 <div class="restaurant-card-meta">
