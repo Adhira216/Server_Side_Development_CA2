@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/restaurants.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <script>
     function toggleSidebar() 
     {
@@ -105,11 +107,35 @@
 
                     @if($foodList->restaurants->count())
                         <div class="detail-section">
-                            <p class="detail-section-label">Restaurants</p>
-                            <div class="tag-row">
+                            <p class="detail-section-label">Included Restaurants</p>
+                            <p class="detail-copy restaurant-section-intro">
+                                These places are part of the curated experience behind this food list.
+                            </p>
+
+                            <div class="food-list-restaurant-grid">
                                 @foreach($foodList->restaurants as $restaurant)
-                                    <a href="{{ route('restaurants.show', $restaurant) }}" class="tag-pill restaurant-pill">
-                                        {{ $restaurant->name }}
+                                    <a href="{{ route('restaurants.show', $restaurant) }}" class="food-list-restaurant-card">
+                                        <span class="food-list-restaurant-media">
+                                            @if($restaurant->image_url)
+                                                <img src="{{ $restaurant->image_url }}" alt="{{ $restaurant->name }} image" class="food-list-restaurant-image">
+                                            @else
+                                                <span class="food-list-restaurant-fallback">{{ strtoupper(substr($restaurant->name, 0, 1)) }}</span>
+                                            @endif
+                                        </span>
+
+                                        <span class="food-list-restaurant-content">
+                                            <span class="food-list-restaurant-topline">
+                                                <span class="food-list-restaurant-name">{{ $restaurant->name }}</span>
+                                                <span class="restaurant-pill">{{ $restaurant->cuisine }}</span>
+                                            </span>
+
+                                            <span class="food-list-restaurant-meta">
+                                                <span>{{ $restaurant->location }}</span>
+                                                @if(!is_null($restaurant->rating))
+                                                    <span>Rating {{ number_format((float) $restaurant->rating, 1) }}/5</span>
+                                                @endif
+                                            </span>
+                                        </span>
                                     </a>
                                 @endforeach
                             </div>
