@@ -80,6 +80,261 @@
     padding: 2rem;
 }
 
+.restaurant-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #6a7488;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.restaurant-back-link:hover {
+    color: #3f4b60;
+}
+
+.restaurant-hero-card,
+.restaurant-related-panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.restaurant-hero-card::before,
+.restaurant-related-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255, 244, 238, 0.8), transparent 42%);
+    pointer-events: none;
+}
+
+.restaurant-hero-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.restaurant-hero-media {
+    display: flex;
+}
+
+.restaurant-hero-image-shell {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 1.9rem;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(248, 234, 227, 0.52));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.restaurant-hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.restaurant-profile-topline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.restaurant-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    background: rgba(119, 84, 92, 0.1);
+    color: #77545c;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.restaurant-profile-badge-soft {
+    background: rgba(48, 59, 78, 0.08);
+    color: #5b667a;
+}
+
+.restaurant-hero-summary {
+    margin: 0.9rem 0 0;
+    max-width: 65ch;
+    color: rgba(48, 59, 78, 0.76);
+    line-height: 1.75;
+}
+
+.restaurant-stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.restaurant-stat-card,
+.restaurant-info-panel {
+    border: 1px solid rgba(135, 117, 126, 0.12);
+    border-radius: 1.4rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 244, 0.9));
+    box-shadow: 0 18px 36px rgba(110, 92, 109, 0.08);
+}
+
+.restaurant-stat-card {
+    padding: 1rem 1.1rem;
+}
+
+.restaurant-stat-label {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: rgba(48, 59, 78, 0.6);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.restaurant-stat-card strong {
+    color: #2f384c;
+    font-size: 1rem;
+}
+
+.restaurant-info-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.9fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.restaurant-info-panel {
+    padding: 1.65rem;
+}
+
+.restaurant-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.restaurant-panel-head h3 {
+    margin: 0.2rem 0 0;
+    color: #2f384c;
+    font-size: 1.35rem;
+}
+
+.restaurant-panel-summary {
+    margin: 0;
+    max-width: 28ch;
+    color: rgba(48, 59, 78, 0.68);
+    line-height: 1.65;
+}
+
+.restaurant-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.restaurant-feature-item,
+.restaurant-detail-list-item,
+.restaurant-related-card {
+    border: 1px solid rgba(135, 117, 126, 0.12);
+    border-radius: 1.15rem;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.restaurant-feature-item {
+    padding: 1rem 1.05rem;
+}
+
+.restaurant-feature-label {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: rgba(48, 59, 78, 0.6);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.restaurant-feature-item p {
+    margin: 0;
+    color: rgba(48, 59, 78, 0.78);
+    line-height: 1.65;
+}
+
+.restaurant-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.restaurant-detail-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 1rem;
+}
+
+.restaurant-detail-list-item span {
+    color: rgba(48, 59, 78, 0.65);
+}
+
+.restaurant-detail-list-item strong {
+    color: #2f384c;
+    text-align: right;
+}
+
+.restaurant-related-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.restaurant-related-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1rem 1.05rem;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.restaurant-related-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(119, 84, 92, 0.22);
+    box-shadow: 0 18px 36px rgba(110, 92, 109, 0.1);
+}
+
+.restaurant-related-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.restaurant-related-card strong {
+    color: #2f384c;
+    font-size: 1.05rem;
+}
+
+.restaurant-related-card span {
+    color: rgba(48, 59, 78, 0.72);
+    line-height: 1.6;
+}
+
+.restaurant-bottom-nav {
+    margin-top: 1.5rem;
+}
+
 .restaurant-detail-layout {
     display: grid;
     grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
@@ -277,7 +532,8 @@
     .restaurant-hero,
     .restaurant-hero-actions,
     .restaurant-card-footer,
-    .restaurant-detail-layout {
+    .restaurant-detail-layout,
+    .restaurant-hero-layout {
         flex-direction: column;
         align-items: stretch;
     }
@@ -286,7 +542,12 @@
     .restaurant-detail-grid,
     .restaurant-form-grid,
     .restaurant-selection-grid,
-    .food-list-restaurant-grid {
+    .food-list-restaurant-grid,
+    .restaurant-hero-layout,
+    .restaurant-info-grid,
+    .restaurant-feature-grid,
+    .restaurant-stat-strip,
+    .restaurant-related-grid {
         grid-template-columns: 1fr;
     }
 
@@ -299,8 +560,15 @@
         min-height: 280px;
     }
 
+    .restaurant-panel-head,
+    .restaurant-detail-list-item,
+    .restaurant-related-topline,
     .food-list-restaurant-topline {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .restaurant-detail-list-item strong {
+        text-align: left;
     }
 }
