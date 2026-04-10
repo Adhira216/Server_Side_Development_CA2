@@ -1,0 +1,172 @@
+.restaurant-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.restaurant-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.restaurant-create-link,
+.restaurant-empty-link {
+    text-decoration: none;
+}
+
+.restaurant-list-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.restaurant-card-media {
+    position: relative;
+}
+
+.restaurant-grid-image,
+.restaurant-detail-image {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.restaurant-grid-image {
+    height: 190px;
+    border-radius: 1.25rem;
+}
+
+.restaurant-image-fallback,
+.restaurant-detail-fallback {
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.95), rgba(255, 241, 235, 0.86) 38%, rgba(245, 215, 202, 0.76) 100%),
+        linear-gradient(135deg, rgba(153, 112, 76, 0.18), rgba(117, 92, 134, 0.18));
+    color: #5f4a64;
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: 0.08em;
+}
+
+.restaurant-image-fallback {
+    height: 190px;
+    border-radius: 1.25rem;
+    font-size: 2.5rem;
+}
+
+.restaurant-card-meta,
+.restaurant-detail-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.restaurant-card-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.restaurant-stat {
+    font-size: 0.92rem;
+    color: rgba(48, 59, 78, 0.74);
+}
+
+.restaurant-detail-card {
+    padding: 2rem;
+}
+
+.restaurant-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+.restaurant-detail-image,
+.restaurant-detail-fallback {
+    min-height: 100%;
+    border-radius: 1.6rem;
+}
+
+.restaurant-detail-image {
+    min-height: 420px;
+}
+
+.restaurant-detail-fallback {
+    min-height: 420px;
+    font-size: 4rem;
+}
+
+.restaurant-detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.restaurant-detail-head {
+    align-items: flex-start;
+}
+
+.restaurant-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.restaurant-info-link {
+    color: #77545c;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.restaurant-info-link:hover {
+    color: #4e5c71;
+}
+
+.restaurant-form-panel {
+    max-width: 1040px;
+}
+
+.restaurant-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.2rem;
+}
+
+.restaurant-form-grid-span-2 {
+    grid-column: span 2;
+}
+
+.restaurant-form-panel textarea {
+    min-height: 130px;
+}
+
+@media (max-width: 960px) {
+    .restaurant-hero,
+    .restaurant-hero-actions,
+    .restaurant-card-footer,
+    .restaurant-detail-layout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .restaurant-detail-layout,
+    .restaurant-detail-grid,
+    .restaurant-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .restaurant-form-grid-span-2 {
+        grid-column: span 1;
+    }
+
+    .restaurant-detail-image,
+    .restaurant-detail-fallback {
+        min-height: 280px;
+    }
+}
