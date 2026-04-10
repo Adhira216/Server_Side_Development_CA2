@@ -110,7 +110,10 @@ class FoodListController extends Controller
      */
     public function create()
     {
-        $restaurants = Restaurant::all(); // get all restaurants
+        $restaurants = Restaurant::query()
+            ->orderBy('name')
+            ->get();
+
         return view('lists.create', compact('restaurants'));
     }
 
@@ -119,28 +122,17 @@ class FoodListController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
-            'tags' => 'nullable|string|max:255',
-            'restaurants' => 'nullable|array',
-            'restaurants.*' => 'exists:restaurants,id',
-        ]);
+        $validated = $request->validate($this->rules());
 
-        // Create the food list
         $foodList = FoodList::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
             'location' => $validated['location'],
-            'tags' => $validated['tags'],
+            'tags' => $validated['tags'] ?? null,
             'user_id' => $request->user()->id,
         ]);
 
-        // Sync selected restaurants (many-to-many pivot)
-        if (!empty($validated['restaurants'])) {
-            $foodList->restaurants()->sync($validated['restaurants']);
-        }
+        $foodList->restaurants()->sync($validated['restaurants'] ?? []);
 
         return redirect()->route('lists.index')->with('success', 'Food list created successfully.');
     }
@@ -155,6 +147,7 @@ class FoodListController extends Controller
                 'foodListVotes' => fn ($query) => $query
                     ->where('user_id', auth()->id())
                     ->select('id', 'food_list_id', 'user_id', 'value'),
+                'restaurants' => fn ($query) => $query->orderBy('name'),
             ]);
 
         $foodList->setAttribute('vote_total', (int) ($foodList->vote_total ?? 0));
@@ -170,8 +163,10 @@ class FoodListController extends Controller
     {
         abort_unless(auth()->id() === $list->user_id, 403);
 
-        $foodList = $list->load('restaurants'); // <-- load associated restaurants
-        $restaurants = Restaurant::all();        // <-- all restaurants for dropdown
+        $foodList = $list->load('restaurants');
+        $restaurants = Restaurant::query()
+            ->orderBy('name')
+            ->get();
 
         return view('lists.edit', compact('foodList', 'restaurants'));
     }
@@ -183,18 +178,15 @@ class FoodListController extends Controller
     {
         abort_unless($request->user()->id === $list->user_id, 403);
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
-            'tags' => 'nullable|string|max:255',
-            'restaurants' => 'nullable|array',
-            'restaurants.*' => 'exists:restaurants,id',
+        $validated = $request->validate($this->rules());
+
+        $list->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'location' => $validated['location'],
+            'tags' => $validated['tags'] ?? null,
         ]);
 
-        $list->update($validated);
-
-        // Sync restaurants
         $list->restaurants()->sync($validated['restaurants'] ?? []);
 
         return redirect()->to('/lists/' . $list->getKey())
@@ -250,5 +242,17 @@ class FoodListController extends Controller
         ]);
 
         return back();
+    }
+
+    private function rules(): array
+    {
+        return [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'tags' => 'nullable|string|max:255',
+            'restaurants' => 'nullable|array',
+            'restaurants.*' => 'exists:restaurants,id',
+        ];
     }
 }
