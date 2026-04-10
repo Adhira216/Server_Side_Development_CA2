@@ -23,8 +23,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //Restaurant routes
 Route::middleware('auth')->group(function () 
 {
-    Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
-    Route::get('/restaurants/{restaurant}', [RestaurantController::class, 'show'])->name('restaurants.show');
+    Route::resource('restaurants', RestaurantController::class)->only(['index', 'show']);
 });
 
 //Profile routes
