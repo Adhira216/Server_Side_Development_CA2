@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/restaurants.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <script>
     function toggleSidebar() 
     {
@@ -119,19 +121,57 @@
                             @enderror
                         </div>
 
-                        <div class="field">
-                            <label for="restaurants">Restaurants</label>
-                            <select name="restaurants[]" id="restaurants" multiple>
-                                @foreach($restaurants as $restaurant)
-                                    <option value="{{ $restaurant->id }}"
-                                        @selected($foodList->restaurants->contains($restaurant->id))
-                                    >
-                                        {{ $restaurant->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <small>Hold Ctrl (Cmd on Mac) to select multiple restaurants</small>
+                        <div class="field restaurant-selection-field">
+                            <label>Restaurants</label>
+                            <div class="restaurant-selection-header">
+                                <p>Update the restaurants featured in this list to keep the collection accurate.</p>
+                                <small>Select all restaurants that belong in this curated set.</small>
+                            </div>
+
+                            @php
+                                $selectedRestaurants = collect(old('restaurants', $foodList->restaurants->pluck('id')->all()))
+                                    ->map(fn ($id) => (int) $id)
+                                    ->all();
+                            @endphp
+
+                            @if($restaurants->count())
+                                <div class="restaurant-selection-grid">
+                                    @foreach($restaurants as $restaurant)
+                                        <label class="restaurant-selector-card">
+                                            <input
+                                                type="checkbox"
+                                                name="restaurants[]"
+                                                value="{{ $restaurant->id }}"
+                                                @checked(in_array($restaurant->id, $selectedRestaurants, true))
+                                            >
+
+                                            <span class="restaurant-selector-body">
+                                                @if($restaurant->image_url)
+                                                    <img src="{{ $restaurant->image_url }}" alt="{{ $restaurant->name }} image" class="restaurant-selector-image">
+                                                @else
+                                                    <span class="restaurant-selector-fallback">{{ strtoupper(substr($restaurant->name, 0, 1)) }}</span>
+                                                @endif
+
+                                                <span class="restaurant-selector-copy">
+                                                    <strong>{{ $restaurant->name }}</strong>
+                                                    <span>{{ $restaurant->location }}</span>
+                                                    <span>{{ $restaurant->cuisine }}</span>
+                                                    @if(!is_null($restaurant->rating))
+                                                        <span>Rating: {{ number_format((float) $restaurant->rating, 1) }}/5</span>
+                                                    @endif
+                                                </span>
+                                            </span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            @else
+                                <p class="restaurant-selection-empty">No restaurants available yet. Create restaurant profiles first to attach them here.</p>
+                            @endif
+
                             @error('restaurants')
+                                <div class="field-error">{{ $message }}</div>
+                            @enderror
+                            @error('restaurants.*')
                                 <div class="field-error">{{ $message }}</div>
                             @enderror
                         </div>
