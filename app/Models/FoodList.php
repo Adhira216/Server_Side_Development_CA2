@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FoodList extends Model
@@ -28,8 +29,8 @@ class FoodList extends Model
         return $this->hasMany(FoodListVote::class);
     }
 
-    public function restaurants()
+    public function restaurants(): BelongsToMany
     {
-        return $this->belongsToMany(Restaurant::class, 'list_restaurant', 'list_id', 'restaurant_id');
+        return $this->belongsToMany(Restaurant::class);
     }
 }
