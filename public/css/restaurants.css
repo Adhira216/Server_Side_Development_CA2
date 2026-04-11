@@ -592,30 +592,171 @@
 }
 
 @media (max-width: 960px) {
-    .restaurant-hero,
-    .restaurant-hero-actions,
-    .restaurant-card-footer,
-    .restaurant-detail-layout,
-    .restaurant-hero-layout {
-        flex-direction: column;
-        align-items: stretch;
+
+    /* Hero card */
+    .restaurant-hero-card {
+        padding: 1.2rem;
+        border-radius: 1.2rem;
     }
 
-    .restaurant-detail-layout,
-    .restaurant-detail-grid,
+    .restaurant-hero-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .restaurant-hero-image-shell {
+        padding: 0.5rem;
+        border-radius: 1.2rem;
+    }
+
+    .restaurant-detail-image,
+    .restaurant-detail-fallback {
+        height: 220px;
+        min-height: unset;
+        border-radius: 1rem;
+    }
+
+    .restaurant-hero-content {
+        gap: 1rem;
+    }
+
+    .restaurant-profile-topline {
+        padding-top: 0;
+        gap: 0.5rem;
+    }
+
+    .restaurant-profile-badge {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.7rem;
+    }
+
+    .restaurant-detail-head h2 {
+        font-size: 1.4rem;
+        line-height: 1.3;
+    }
+
+    .restaurant-hero-summary {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-top: 0.5rem;
+    }
+
+    .restaurant-detail-pills {
+        gap: 0.4rem;
+    }
+
+    .restaurant-pill,
+    .meta-pill {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.6rem;
+    }
+
+    /* Stats (scrollable) */
+    .restaurant-stat-strip {
+        display: flex;
+        overflow-x: auto;
+        gap: 0.6rem;
+        padding-right: 0;
+    }
+
+    .restaurant-stat-card {
+        min-width: 130px;
+        flex-shrink: 0;
+        padding: 0.8rem;
+    }
+
+    .restaurant-stat-label {
+        font-size: 0.65rem;
+    }
+
+    .restaurant-stat-card strong {
+        font-size: 0.9rem;
+    }
+
+    /* Action buttons */
+    .restaurant-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+    }
+
+    .owner-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        width: 100%;
+    }
+
+    .action-button,
+    .delete-button {
+        width: 100%;
+        text-align: center;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    /* Info grid*/
+    .restaurant-info-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .restaurant-info-panel {
+        padding: 1.2rem;
+        border-radius: 1.1rem;
+    }
+
+    /* keep header clean */
+    .restaurant-panel-head {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .restaurant-panel-head h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Feature grid */
+    .restaurant-feature-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .restaurant-feature-item {
+        padding: 0.9rem;
+    }
+
+    .restaurant-feature-item p {
+        font-size: 0.9rem;
+    }
+
+    /* Quick facts */
+    .restaurant-detail-list-item {
+        display: flex;
+        flex-direction: row; /* important fix */
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 0.9rem;
+    }
+
+    .restaurant-detail-list-item span {
+        font-size: 0.85rem;
+    }
+
+    .restaurant-detail-list-item strong {
+        font-size: 0.9rem;
+        text-align: right;
+    }
+
+    /* Other global stacking */
     .restaurant-form-grid,
     .restaurant-selection-grid,
     .food-list-restaurant-grid,
-    .restaurant-hero-layout,
-    .restaurant-info-grid,
     .restaurant-feature-grid,
-    .restaurant-stat-strip,
     .restaurant-related-grid {
         grid-template-columns: 1fr;
-    }
-
-    .restaurant-form-section-head {
-        flex-direction: column;
     }
 
     .restaurant-form-grid-span-2 {
@@ -627,16 +768,10 @@
         min-height: 280px;
     }
 
-    .restaurant-panel-head,
-    .restaurant-detail-list-item,
     .restaurant-related-topline,
     .food-list-restaurant-topline {
         flex-direction: column;
         align-items: flex-start;
-    }
-
-    .restaurant-detail-list-item strong {
-        text-align: left;
     }
 }
 
