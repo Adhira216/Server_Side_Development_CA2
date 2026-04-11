@@ -32,10 +32,6 @@
             <x-sidebar />
 
             <main class="home-main">
-                <a href="{{ route('restaurants.index') }}" class="restaurant-back-link">
-                    <span aria-hidden="true">&larr;</span>
-                    Back to restaurants
-                </a>
 
                 <section class="content-panel section-intro">
                     <div class="section-copy">
@@ -57,8 +53,44 @@
                     <div class="restaurant-hero-layout">
                         <div class="restaurant-hero-media">
                             <div class="restaurant-hero-image-shell">
-                                @if($restaurant->image_url)
-                                    <img src="{{ $restaurant->image_url }}" alt="{{ $restaurant->name }} image" class="restaurant-detail-image">
+                                @php
+                                    $cuisine = strtolower(trim($restaurant->cuisine));
+
+                                    $cuisineImages = [
+                                        'american' => 'american.jpg',
+                                        'cafe' => 'cafe.jpg',
+                                        'fast food' => 'fast-food.jpg',
+                                        'fine dining' => 'fine-dining.jpg',
+                                        'italian' => 'italian.jpg',
+                                        'japanese' => 'japanese.jpg',
+                                        'mexican' => 'mexican.jpg',
+                                        'seafood' => 'seafood.jpg',
+                                        'street food' => 'street-food.jpg',
+                                        'vegan' => 'vegan.jpg',
+                                        'chinese' => 'chinese.jpg',
+                                        'indian' => 'indian.jpg',
+                                        'thai' => 'thai.jpg',
+                                        'korean' => 'korean.jpg',
+                                        'french' => 'french.jpg',
+                                        'greek' => 'greek.jpg',
+                                        'turkish' => 'turkish.jpg',
+                                        'lebanese' => 'lebanese.jpg',
+                                        'spanish' => 'spanish.jpg',
+                                        'ethiopian' => 'ethiopian.jpg',
+                                        'caribbean' => 'caribbean.jpg',
+                                    ];
+
+                                    $imageFile = $cuisineImages[$cuisine] ?? null;
+                                @endphp
+
+                                @if($imageFile)
+                                    <img src="{{ asset('images/restaurants/' . $imageFile) }}"
+                                        alt="{{ $restaurant->cuisine }} cuisine image"
+                                        class="restaurant-detail-image">
+                                @elseif($restaurant->image_url)
+                                    <img src="{{ $restaurant->image_url }}"
+                                        alt="{{ $restaurant->name }} image"
+                                        class="restaurant-detail-image">
                                 @else
                                     <div class="restaurant-detail-fallback">
                                         <span>{{ strtoupper(substr($restaurant->name, 0, 1)) }}</span>
@@ -199,27 +231,16 @@
                     </article>
                 </section>
 
-                @if($restaurant->foodLists->count())
-                    <section class="content-panel restaurant-related-panel">
-                        <div class="restaurant-panel-head">
-                            <div>
-                                <p class="detail-section-label">Curated Lists</p>
-                                <h3>Featured In Food Lists</h3>
-                            </div>
-                            <p class="restaurant-panel-summary">
-                                Explore the collections that already include this restaurant.
-                            </p>
-                        </div>
+                {{-- FOOD LISTS --}}
+               @if($restaurant->foodLists->count())
+                    <section class="content-panel restaurant-foodlists-panel">
+                        <p class="detail-section-label">Featured In</p>
+                        <h3>Food lists<h3>
 
-                        <div class="restaurant-related-grid">
+                        <div class="restaurant-foodlists-grid">
                             @foreach($restaurant->foodLists as $list)
-                                <a href="{{ route('lists.show', $list) }}" class="restaurant-related-card">
-                                    <span class="restaurant-related-topline">
-                                        <span class="list-count">Food List</span>
-                                        <span class="meta-pill">{{ $list->location }}</span>
-                                    </span>
-                                    <strong>{{ $list->title }}</strong>
-                                    <span>{{ \Illuminate\Support\Str::limit($list->description, 120) }}</span>
+                                <a class="restaurant-foodlist-item" href="{{ url('/lists/' . $list->id) }}">
+                                    {{ $list->title }}
                                 </a>
                             @endforeach
                         </div>
