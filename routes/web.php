@@ -34,11 +34,6 @@ Route::middleware(['auth'])->group(function ()
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::get('/dashboard', function () 
-{
-    return view('dashboard');
-})->middleware('auth');
-
 Route::resource('lists', FoodListController::class)->middleware('auth');
 Route::post('/lists/{list}/upvote', [FoodListController::class, 'upvote'])
     ->middleware('auth')

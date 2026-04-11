@@ -45,7 +45,6 @@
                     <a href="{{ route('lists.create') }}" class="footer-link footer-link-row">Create List</a>
                     <a href="{{ route('lists.index') }}" class="footer-link footer-link-row">My Lists</a>
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="footer-link footer-link-row">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}" class="footer-link footer-link-row">Login</a>
                         <a href="{{ route('register') }}" class="footer-link footer-link-row">Register</a>
