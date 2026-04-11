@@ -10,24 +10,27 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate([
+        //User Personas
+
+        User::create([
+            'name' => 'Shauna Liu',
             'email' => 'sl@gmail.com',
-        ], [
-            'name' => 'Aloka D',
             'password' => Hash::make('password'),
+            'location' => 'Dundalk',
+            'bio' => '20 year old college student looking for affordable places to eat.',
         ]);
 
-        User::updateOrCreate([
-            'email' => 'gj@gmail.com',
-        ], [
+        User::create([
             'name' => 'Gia Jordan',
+            'email' => 'gj@gmail.com',
             'password' => Hash::make('password'),
+            'location' => 'Dublin',
+            'bio' => '28 year old digital marketing specialist who thrives on discovering and sharing new food experiences.',
         ]);
 
-        User::updateOrCreate([
-            'email' => 't@t.com',
-        ], [
+        User::create([
             'name' => 'Test User',
+            'email' => 't@t.com',
             'password' => Hash::make('password'),
         ]);
     }
