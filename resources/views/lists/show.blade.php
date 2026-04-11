@@ -116,10 +116,50 @@
                                 @foreach($foodList->restaurants as $restaurant)
                                     <a href="{{ route('restaurants.show', $restaurant) }}" class="food-list-restaurant-card">
                                         <span class="food-list-restaurant-media">
-                                            @if($restaurant->image_url)
-                                                <img src="{{ $restaurant->image_url }}" alt="{{ $restaurant->name }} image" class="food-list-restaurant-image">
+                                            @php
+                                                $cuisine = strtolower(trim($restaurant->cuisine));
+
+                                                $cuisineImages = [
+                                                    'american' => 'american.jpg',
+                                                    'cafe' => 'cafe.jpg',
+                                                    'fast food' => 'fast-food.jpg',
+                                                    'fine dining' => 'fine-dining.jpg',
+                                                    'italian' => 'italian.jpg',
+                                                    'japanese' => 'japanese.jpg',
+                                                    'mexican' => 'mexican.jpg',
+                                                    'seafood' => 'seafood.jpg',
+                                                    'street food' => 'street-food.jpg',
+                                                    'vegan' => 'vegan.jpg',
+                                                    'chinese' => 'chinese.jpg',
+                                                    'indian' => 'indian.jpg',
+                                                    'thai' => 'thai.jpg',
+                                                    'korean' => 'korean.jpg',
+                                                    'french' => 'french.jpg',
+                                                    'greek' => 'greek.jpg',
+                                                    'turkish' => 'turkish.jpg',
+                                                    'lebanese' => 'lebanese.jpg',
+                                                    'spanish' => 'spanish.jpg',
+                                                    'ethiopian' => 'ethiopian.jpg',
+                                                    'caribbean' => 'caribbean.jpg',
+                                                ];
+
+                                                $imageFile = $cuisineImages[$cuisine] ?? null;
+                                            @endphp
+
+                                            @if($imageFile)
+                                                <img src="{{ asset('images/restaurants/' . $imageFile) }}"
+                                                    alt="{{ $restaurant->cuisine }} cuisine image"
+                                                    class="food-list-restaurant-image">
+
+                                            @elseif($restaurant->image_url)
+                                                <img src="{{ $restaurant->image_url }}"
+                                                    alt="{{ $restaurant->name }} image"
+                                                    class="food-list-restaurant-image">
+
                                             @else
-                                                <span class="food-list-restaurant-fallback">{{ strtoupper(substr($restaurant->name, 0, 1)) }}</span>
+                                                <span class="food-list-restaurant-fallback">
+                                                    {{ strtoupper(substr($restaurant->name, 0, 1)) }}
+                                                </span>
                                             @endif
                                         </span>
 
