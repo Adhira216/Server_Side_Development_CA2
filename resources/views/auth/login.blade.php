@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link rel="icon" type="image/svg+xml" href="{{ asset('app-logo.svg') }}">
-
     <!-- Global CSS -->
     <link rel="stylesheet" href="{{ asset('css/variables.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    
     <!-- Auth CSS (for login/register forms) -->
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-    
+    <script>
+        function toggleSidebar()
+        {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
     <title>Login</title>
 </head>
 <body class="home-page-body">
@@ -24,6 +26,11 @@
 
     <div class="home-page home-layout">
         <!-- Sidebar -->
+        <button class="hamburger" onclick="toggleSidebar()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <x-sidebar />
 
         <!-- Main Content -->
