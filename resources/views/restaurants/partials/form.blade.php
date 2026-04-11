@@ -75,15 +75,47 @@
 
                     <div class="field">
                         <label for="cuisine">Cuisine</label>
-                        <input
-                            type="text"
+                        @php
+                            $cuisineOptions = [
+                                'American',
+                                'Cafe',
+                                'Fast Food',
+                                'Fine Dining',
+                                'Italian',
+                                'Japanese',
+                                'Mexican',
+                                'Seafood',
+                                'Street Food',
+                                'Vegan',
+                                'Chinese',
+                                'Indian',
+                                'Thai',
+                                'Korean',
+                                'French',
+                                'Greek',
+                                'Turkish',
+                                'Lebanese',
+                                'Spanish',
+                                'Ethiopian',
+                                'Caribbean',
+                            ];
+                        @endphp
+
+                        <select
                             id="cuisine"
                             name="cuisine"
-                            value="{{ old('cuisine', $restaurant?->cuisine) }}"
-                            placeholder="Modern Irish"
-                            maxlength="255"
                             required
                         >
+                            <option value="">Select cuisine</option>
+
+                            @foreach($cuisineOptions as $option)
+                                <option value="{{ $option }}"
+                                    @selected(old('cuisine', $restaurant?->cuisine) === $option)
+                                >
+                                    {{ $option }}
+                                </option>
+                            @endforeach
+                        </select>
                         @error('cuisine')
                             <div class="field-error">{{ $message }}</div>
                         @enderror
@@ -201,22 +233,6 @@
                             maxlength="255"
                         >
                         @error('website')
-                            <div class="field-error">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="field restaurant-form-grid-span-2">
-                        <label for="image_url">Image URL</label>
-                        <input
-                            type="url"
-                            id="image_url"
-                            name="image_url"
-                            value="{{ old('image_url', $restaurant?->image_url) }}"
-                            placeholder="https://images.example.com/restaurant.jpg"
-                            maxlength="255"
-                        >
-                        <small>Paste a public image URL for the restaurant cover image. A branded fallback tile appears when no image is supplied.</small>
-                        @error('image_url')
                             <div class="field-error">{{ $message }}</div>
                         @enderror
                     </div>
