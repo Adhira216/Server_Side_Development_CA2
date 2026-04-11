@@ -105,6 +105,18 @@
                         </div>
 
                         <div class="field">
+                            <label for="restaurants">Restaurants</label>
+                            <select name="restaurants[]" id="restaurants" multiple>
+                                @foreach($restaurants as $restaurant)
+                                    <option value="{{ $restaurant->id }}">
+                                        {{ $restaurant->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small>Hold Ctrl (Cmd on Mac) to select multiple</small>
+                        </div>
+
+                        <div class="field">
                             <label for="tags">Tags</label>
                             <input
                                 type="text"
@@ -116,55 +128,6 @@
                             >
                             <small>Separate tags with commas</small>
                             @error('tags')
-                                <div class="field-error">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="field restaurant-selection-field">
-                            <label>Restaurants</label>
-                            <div class="restaurant-selection-header">
-                                <p>Attach one or more restaurants to make this list feel curated and actionable.</p>
-                                <small>Select any relevant places below.</small>
-                            </div>
-
-                            @if($restaurants->count())
-                                <div class="restaurant-selection-grid">
-                                    @foreach($restaurants as $restaurant)
-                                        <label class="restaurant-selector-card">
-                                            <input
-                                                type="checkbox"
-                                                name="restaurants[]"
-                                                value="{{ $restaurant->id }}"
-                                                @checked(in_array($restaurant->id, old('restaurants', [])))
-                                            >
-
-                                            <span class="restaurant-selector-body">
-                                                @if($restaurant->image_url)
-                                                    <img src="{{ $restaurant->image_url }}" alt="{{ $restaurant->name }} image" class="restaurant-selector-image">
-                                                @else
-                                                    <span class="restaurant-selector-fallback">{{ strtoupper(substr($restaurant->name, 0, 1)) }}</span>
-                                                @endif
-
-                                                <span class="restaurant-selector-copy">
-                                                    <strong>{{ $restaurant->name }}</strong>
-                                                    <span>{{ $restaurant->location }}</span>
-                                                    <span>{{ $restaurant->cuisine }}</span>
-                                                    @if(!is_null($restaurant->rating))
-                                                        <span>Rating: {{ number_format((float) $restaurant->rating, 1) }}/5</span>
-                                                    @endif
-                                                </span>
-                                            </span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                            @else
-                                <p class="restaurant-selection-empty">No restaurants available yet. Create restaurant profiles first to attach them here.</p>
-                            @endif
-
-                            @error('restaurants')
-                                <div class="field-error">{{ $message }}</div>
-                            @enderror
-                            @error('restaurants.*')
                                 <div class="field-error">{{ $message }}</div>
                             @enderror
                         </div>
