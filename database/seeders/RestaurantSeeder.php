@@ -11,16 +11,16 @@ class RestaurantSeeder extends Seeder
     {
         $restaurants = [
             [
-                'name' => "McDonald's",
-                'description' => "McDonald's is a globally recognised fast food chain offering quick and affordable meals.",
+                'name' => 'Harbour Grill Social',
+                'description' => 'A lively waterfront grill serving polished comfort food, stacked burgers, and generous sharing plates.',
                 'location' => 'Dublin',
-                'cuisine' => 'Fast Food',
-                'price_range' => 'Budget',
-                'rating' => 4.1,
-                'opening_hours' => '07:00 - 23:00',
-                'phone' => '01 123 4567',
-                'website' => 'https://www.mcdonalds.com',
-                'menu_highlights' => 'Big Mac, McNuggets, Fries',
+                'cuisine' => 'Modern Grill',
+                'price_range' => 'Mid-range',
+                'rating' => 4.5,
+                'opening_hours' => '12:00 - 22:30',
+                'phone' => '01 431 2201',
+                'website' => 'https://harbourgrillsocial.example.com',
+                'menu_highlights' => 'Dry-Aged Cheeseburger, Charred Corn Ribs, Truffle Chips',
             ],
             [
                 'name' => 'The Gourmet Kitchen',
@@ -276,8 +276,47 @@ class RestaurantSeeder extends Seeder
                 ],
         ];
 
-        foreach ($restaurants as $restaurant) {
-            Restaurant::create($restaurant);
+        foreach ($restaurants as $index => $restaurant) {
+            $restaurant['image_url'] = $this->buildImageUrl(
+                $restaurant['name'],
+                $restaurant['cuisine'],
+                $index + 1
+            );
+
+            Restaurant::updateOrCreate(
+                ['name' => $restaurant['name']],
+                $restaurant
+            );
         }
+    }
+
+    private function buildImageUrl(string $name, string $cuisine, int $lock): string
+    {
+        $imageMap = [
+            'Harbour Grill Social' => 'images/restaurants/american.jpg',
+            'The Gourmet Kitchen' => 'images/restaurants/fine-dining.jpg',
+            'Sushi World' => 'images/restaurants/japanese.jpg',
+            'Pasta Palace' => 'images/restaurants/italian-bistro.jpg',
+            'Burger Haven' => 'images/restaurants/fast-food.jpg',
+            'Taco Town' => 'images/restaurants/mexican.jpg',
+            'Vegan Delight' => 'images/restaurants/vegan.jpg',
+            'Cafe Mocha' => 'images/restaurants/cafe.jpg',
+            'Seafood Shack' => 'images/restaurants/seafood.jpg',
+            'Pizza Planet' => 'images/restaurants/italian.jpg',
+            'Late Night Bites' => 'images/restaurants/street-food.jpg',
+            'Dragon House' => 'images/restaurants/chinese.jpg',
+            'Spice Route' => 'images/restaurants/indian.jpg',
+            'Bangkok Basil' => 'images/restaurants/thai.jpg',
+            'Seoul Kitchen' => 'images/restaurants/korean.jpg',
+            'Parisian Bistro' => 'images/restaurants/french.jpg',
+            'Athens Taverna' => 'images/restaurants/greek.jpg',
+            'Istanbul Grill' => 'images/restaurants/turkish.jpg',
+            'Beirut Mezze' => 'images/restaurants/lebanese.jpg',
+            'Barcelona Tapas' => 'images/restaurants/spanish.jpg',
+            'Addis Ababa Flavours' => 'images/restaurants/ethiopian.jpg',
+            'Havana Street' => 'images/restaurants/caribbean.jpg',
+        ];
+
+        return isset($imageMap[$name]) ? asset($imageMap[$name]) : null;
     }
 }
