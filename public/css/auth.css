@@ -1,0 +1,182 @@
+/* CSS for forms (register/login.blade.php) */
+
+@import url('variables.css');
+
+/* Auth container (register/login panels) */
+.auth-container {
+    background: var(--home-surface);
+    border: 1px solid var(--home-line);
+    border-radius: 24px;
+    padding: 3rem;
+    width: 90%;
+}
+
+/* Form title */
+.auth-container h1 {
+    color: var(--home-plum);
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Fields */
+.auth-container .field {
+    margin-bottom: 1.4rem;
+}
+
+.auth-container .field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--home-ink);
+}
+
+.auth-container .field input,
+.auth-container .field textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border-radius: 24px;
+    border: 1px solid var(--home-line);
+    background: var(--danger-bg);
+    color: var(--home-ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.auth-container .field input:focus,
+.auth-container .field textarea:focus {
+    outline: none;
+    border-color: var(--home-line);
+    background: var(--home-panel);
+}
+
+.auth-container .field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Buttons */
+.auth-container .actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+.auth-container .actions button {
+    width: 100%;
+    padding: 0.95rem 1.45rem;
+    border-radius: 999px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #8c5d8b 0%, #c2876a 100%);
+    color: var(--home-panel);
+    border: none;
+    cursor: pointer;
+    transition: transform 180ms ease, background 0.2s ease;
+}
+
+.auth-container .actions button:hover {
+    transform: translateY(-2px);
+}
+
+/* Error box */
+.auth-container .error-box {
+    background: rgba(183, 28, 28, 0.08);
+    border: 1px solid rgba(183, 28, 28, 0.22);
+    border-radius: 24px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.auth-container .error-box h2 {
+    color: var(--danger-text);
+    margin-bottom: 0.5rem;
+}
+
+.auth-container .error-box ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--danger-text);
+}
+
+/* Links */
+.auth-container p {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--home-ink);
+}
+
+.auth-container p a {
+    color: var(--home-plum);
+    text-decoration: underline;
+}
+
+/* Checkbox field */
+.auth-container .field input[type="checkbox"] {
+    width: auto; 
+    margin-right: 0.5rem;
+    vertical-align: middle; 
+}
+
+.auth-container .field input[type="checkbox"] + span,
+.auth-container .field label {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 600;
+}
+
+/* Multi-select dropdown */
+.auth-container .field select[multiple] {
+    width: 100%;
+    min-height: 120px; /* similar to textarea */
+    padding: 0.7rem 1rem;
+    border-radius: 24px;
+    border: 1px solid var(--home-line);
+    background: var(--danger-bg);
+    color: var(--home-ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    resize: vertical; /* allow resizing */
+}
+
+/* Focus state */
+.auth-container .field select[multiple]:focus {
+    outline: none;
+    border-color: var(--home-line);
+    background: var(--home-surface);
+}
+
+/* Option hover and selected */
+.auth-container .field select[multiple] option:hover {
+    background-color: rgba(140, 93, 139, 0.12);
+}
+
+.auth-container .field select[multiple] option:checked {
+    background-color: rgba(140, 93, 139, 0.25);
+    color: var(--home-plum);
+    font-weight: 600;
+}
+
+/* Label spacing */
+.auth-container .field label + select {
+    margin-bottom: 0.5rem;
+}
+
+/* Small helper text */
+.auth-container .field small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--home-muted);
+}
+
+.home-main.page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}

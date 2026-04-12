@@ -4,233 +4,247 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Lists</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap');
-
-        :root {
-            --bg: #f4efe7;
-            --paper: rgba(255, 250, 242, 0.86);
-            --card: rgba(255, 255, 255, 0.72);
-            --line: rgba(67, 51, 37, 0.14);
-            --text: #2c2118;
-            --muted: #6f5d4e;
-            --accent: #9d5e3d;
-            --accent-soft: #d8b89f;
-            --shadow: 0 24px 60px rgba(73, 49, 31, 0.14);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: 'Manrope', sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at top left, rgba(157, 94, 61, 0.18), transparent 30%),
-                radial-gradient(circle at bottom right, rgba(122, 144, 111, 0.18), transparent 28%),
-                linear-gradient(135deg, #efe6d9 0%, #f7f2ea 45%, #ebe1d4 100%);
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(92, 70, 54, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(92, 70, 54, 0.03) 1px, transparent 1px);
-            background-size: 32px 32px;
-            pointer-events: none;
-        }
-
-        .page {
-            position: relative;
-            width: min(1120px, calc(100% - 2rem));
-            margin: 0 auto;
-            padding: 4rem 0 5rem;
-        }
-
-        .hero {
-            padding: 2.5rem;
-            border: 1px solid var(--line);
-            border-radius: 32px;
-            background: var(--paper);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(14px);
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            margin-bottom: 1rem;
-            color: var(--muted);
-            font-size: 0.82rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-
-        .eyebrow::before {
-            content: "";
-            width: 2.8rem;
-            height: 1px;
-            background: var(--accent);
-        }
-
-        h1 {
-            margin: 0;
-            max-width: 12ch;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            line-height: 0.95;
-            font-weight: 600;
-            letter-spacing: -0.04em;
-        }
-
-        .hero p {
-            max-width: 38rem;
-            margin: 1.25rem 0 0;
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1.8;
-        }
-
-        .lists-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.25rem;
-            margin-top: 2rem;
-        }
-
-        .list-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-height: 240px;
-            padding: 1.5rem;
-            border: 1px solid var(--line);
-            border-radius: 26px;
-            background: var(--card);
-            color: inherit;
-            text-decoration: none;
-            box-shadow: 0 16px 34px rgba(75, 54, 35, 0.09);
-            backdrop-filter: blur(8px);
-            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-            overflow: hidden;
-        }
-
-        .list-card::after {
-            content: "";
-            position: absolute;
-            inset: auto -20% -40% auto;
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(216, 184, 159, 0.35), transparent 70%);
-        }
-
-        .list-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(157, 94, 61, 0.35);
-            box-shadow: 0 22px 42px rgba(75, 54, 35, 0.14);
-        }
-
-        .list-count {
-            color: var(--accent);
-            font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
-        .list-card h2 {
-            position: relative;
-            z-index: 1;
-            margin: auto 0 0.85rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            line-height: 1;
-            font-weight: 600;
-        }
-
-        .list-card p {
-            position: relative;
-            z-index: 1;
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.75;
-        }
-
-        .card-link {
-            position: relative;
-            z-index: 1;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.55rem;
-            margin-top: 1.4rem;
-            color: var(--text);
-            font-size: 0.92rem;
-            font-weight: 600;
-        }
-
-        .empty-state {
-            margin-top: 2rem;
-            padding: 2rem;
-            border: 1px dashed rgba(67, 51, 37, 0.24);
-            border-radius: 24px;
-            background: rgba(255, 250, 242, 0.7);
-            text-align: center;
-            color: var(--muted);
-        }
-
-        @media (max-width: 640px) {
-            .page {
-                width: min(100% - 1.25rem, 1120px);
-                padding: 1.25rem 0 3rem;
-            }
-
-            .hero {
-                padding: 1.5rem;
-                border-radius: 24px;
-            }
-
-            .list-card {
-                min-height: 220px;
-                border-radius: 22px;
-            }
-        }
-    </style>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('app-logo.svg') }}">
+    <link rel="stylesheet" href="{{ asset('css/variables.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+<script>
+    function toggleSidebar() 
+    {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
+</script>
 </head>
-<body>
-    <main class="page">
-        <section class="hero">
-            <span class="eyebrow">Curated Collection</span>
-            <h1>Food Lists</h1>
-            <p>
-                Explore every saved list in one place. Each card opens the full page so you can read the
-                complete details for that collection.
-            </p>
-        </section>
+<body class="home-page-body">
 
-        @if(($foodLists ?? collect())->count())
-            <section class="lists-grid">
-                @foreach($foodLists as $foodList)
-                    <a href="{{ route('lists.show', $foodList) }}" class="list-card">
-                        <span class="list-count">Food List</span>
-                        <h2>{{ $foodList->title }}</h2>
-                        <p>{{ \Illuminate\Support\Str::limit($foodList->description, 150) }}</p>
-                        <span class="card-link">View details <span aria-hidden="true">↗</span></span>
-                    </a>
-                @endforeach
-            </section>
-        @else
-            <section class="empty-state">
-                <h2>No food lists yet</h2>
-                <p>Your lists will appear here once they have been created.</p>
-            </section>
-        @endif
-    </main>
+    <x-header />
+    <div class="home-page">
+        <div class="home-layout">
+            <button class="hamburger" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <x-sidebar />
+
+            <main class="home-main">
+                <section class="content-panel section-intro">
+                    <div class="section-copy">
+                        <span class="eyebrow">Curated Collection</span>
+                        <h1 class="hero-title">{{ $pageTitle }}</h1>
+                        <p class="section-summary">{{ $pageSummary }}</p>
+                    </div>
+
+                    <div class="mode-switcher" aria-label="List view switcher">
+                        <a
+                            href="{{ route('lists.index', array_filter(['view' => 'latest', 'search' => $search ?? '', 'location' => $location ?? '', 'sort' => $sort ?? 'latest'])) }}"
+                            class="mode-pill {{ ($view ?? 'latest') === 'latest' ? 'is-active' : '' }}"
+                        >
+                            Latest
+                        </a>
+                        <a
+                            href="{{ route('lists.index', array_filter(['view' => 'popular', 'search' => $search ?? '', 'location' => $location ?? '', 'sort' => $sort ?? 'latest'])) }}"
+                            class="mode-pill {{ ($view ?? 'latest') === 'popular' ? 'is-active' : '' }}"
+                        >
+                            Popular
+                        </a>
+                    </div>
+                </section>
+
+                @if(session('success'))
+                    <section class="success-box" role="status" aria-live="polite">
+                        <p>{{ session('success') }}</p>
+                    </section>
+                @endif
+
+                <section class="toolbar-panel">
+                    <div class="toolbar-header">
+                        <div>
+                            <div class="toolbar-topline">{{ ($view ?? 'latest') === 'popular' ? 'Community Ranking' : 'Freshly Added' }}</div>
+                            <h2>Search and Filter</h2>
+                            <p>
+                                {{ ($view ?? 'latest') === 'popular'
+                                    ? 'Refine the highest-ranked food lists by keyword, location, or a secondary sort.'
+                                    : 'Refine the newest food lists by keyword, location, or sort order.' }}
+                            </p>
+                        </div>
+                        <div class="results-summary">
+                            {{ $foodLists->count() }} {{ \Illuminate\Support\Str::plural('result', $foodLists->count()) }}
+                        </div>
+                    </div>
+
+                    <form action="{{ route('lists.index') }}" method="GET" class="toolbar-form">
+                        <input type="hidden" name="view" value="{{ $view ?? 'latest' }}">
+
+                        <div class="toolbar-grid">
+                            <div class="toolbar-field toolbar-field--search">
+                                <label for="search">Search</label>
+                                <input
+                                    type="text"
+                                    id="search"
+                                    name="search"
+                                    value="{{ $search ?? '' }}"
+                                    placeholder="Search title, description, location, or tags"
+                                >
+                            </div>
+
+                            <div class="toolbar-field">
+                                <label for="location">Location</label>
+                                <select id="location" name="location">
+                                    <option value="">All locations</option>
+                                    @foreach($availableLocations as $availableLocation)
+                                        <option value="{{ $availableLocation }}" @selected(($location ?? '') === $availableLocation)>
+                                            {{ $availableLocation }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="toolbar-field">
+                                <label for="restaurant">Restaurant</label>
+                                <select id="restaurant" name="restaurant">
+                                    <option value="0">All restaurants</option>
+                                    @foreach($restaurants as $restaurant)
+                                        <option value="{{ $restaurant->id }}" @selected(($restaurantId ?? 0) == $restaurant->id)>
+                                            {{ $restaurant->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="toolbar-field">
+                                <label for="sort">Sort</label>
+                                <select id="sort" name="sort">
+                                    <option value="latest" @selected(($sort ?? 'latest') === 'latest')>Latest</option>
+                                    <option value="oldest" @selected(($sort ?? '') === 'oldest')>Oldest</option>
+                                    <option value="title_asc" @selected(($sort ?? '') === 'title_asc')>Title A-Z</option>
+                                    <option value="title_desc" @selected(($sort ?? '') === 'title_desc')>Title Z-A</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="toolbar-actions">
+                            <div class="toolbar-actions-group">
+                                <button type="submit" class="toolbar-button">Apply filters</button>
+
+                                @if($hasActiveFilters ?? false)
+                                    <a href="{{ route('lists.index', ['view' => $view ?? 'latest']) }}" class="toolbar-link">Clear filters</a>
+                                @endif
+                            </div>
+
+                            @if($hasActiveFilters ?? false)
+                                <div class="filter-pills">
+                                    @if(($search ?? '') !== '')
+                                        <span class="filter-pill"><strong>Search</strong> {{ $search }}</span>
+                                    @endif
+
+                                    @if(($location ?? '') !== '')
+                                        <span class="filter-pill"><strong>Location</strong> {{ $location }}</span>
+                                    @endif
+
+                                    @if(($sort ?? 'latest') !== 'latest')
+                                        <span class="filter-pill">
+                                            <strong>Sort</strong>
+                                            {{ match($sort) {
+                                                'oldest' => 'Oldest',
+                                                'title_asc' => 'Title A-Z',
+                                                'title_desc' => 'Title Z-A',
+                                                default => 'Latest',
+                                            } }}
+                                        </span>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
+                    </form>
+                </section>
+
+                @if(($foodLists ?? collect())->count())
+                    <section class="lists-grid">
+                        @foreach($foodLists as $foodList)
+                            <article class="list-card">
+                                <div class="list-card-top">
+                                    <span class="list-count">Food List</span>
+                                    <p><strong>by {{ $foodList->user->name }}</strong></p>
+                                    <span class="vote-pill">{{ $foodList->location }}</span>
+                                </div>
+
+                                <h2>{{ $foodList->title }}</h2>
+                                <p>{{ \Illuminate\Support\Str::limit($foodList->description, 160) }}</p>
+
+                                <div class="list-meta">
+                                    <span class="meta-pill">Location: {{ $foodList->location }}</span>
+                                </div>
+
+                                <div class="vote-panel">
+                                    <div class="vote-total">
+                                        <strong>{{ $foodList->vote_total }}</strong>
+                                        <span>{{ \Illuminate\Support\Str::plural('Vote', abs($foodList->vote_total)) }}</span>
+                                    </div>
+
+                                    <div class="vote-actions">
+                                        <form action="{{ route('lists.upvote', $foodList) }}" method="POST" class="vote-form">
+                                            @csrf
+                                            <button
+                                                type="submit"
+                                                class="vote-button {{ $foodList->current_user_vote === 1 ? 'is-upvote-active' : '' }}"
+                                            >
+                                                <span aria-hidden="true">▲</span>
+                                                Upvote
+                                            </button>
+                                        </form>
+
+                                        <form action="{{ route('lists.downvote', $foodList) }}" method="POST" class="vote-form">
+                                            @csrf
+                                            <button
+                                                type="submit"
+                                                class="vote-button {{ $foodList->current_user_vote === -1 ? 'is-downvote-active' : '' }}"
+                                            >
+                                                <span aria-hidden="true">▼</span>
+                                                Downvote
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="tag-row">
+                                    {{-- Display tags --}}
+                                    <p><strong>Tags</strong></p>
+                                    @if(!empty($foodList->tags))
+                                        @foreach(array_filter(array_map('trim', explode(',', $foodList->tags))) as $tag)
+                                            <a href="{{ route('lists.index', ['view' => $view ?? 'latest', 'search' => $tag]) }}" class="tag-pill">{{ $tag }}</a>
+                                        @endforeach
+                                    @endif
+                                </div>    
+                                <div class="tag-row">
+                                    {{-- Display restaurants --}}
+                                    <p><strong>Restaurants</strong></p>
+                                    @if($foodList->relationLoaded('restaurants') && $foodList->restaurants->count())
+                                        @foreach($foodList->restaurants as $restaurant)
+                                            <a href="{{ route('restaurants.show', $restaurant) }}" class="tag-pill restaurant-pill">
+                                                {{ $restaurant->name }}
+                                            </a>
+                                        @endforeach
+                                    @endif
+                                </div>
+
+                                <a href="{{ url('/lists/' . $foodList->getKey()) }}" class="card-link">
+                                    View full list <span aria-hidden="true">&rarr;</span>
+                                </a>
+                            </article>
+                        @endforeach
+                    </section>
+                @else
+                    <section class="content-panel empty-state">
+                        <h2>No food lists yet</h2>
+                        <p>Your saved food collections will appear here once they are created. Start a new list to build your next set of places to try.</p>
+                    </section>
+                @endif
+            </main>
+        </div>
+    </div>
+
+    <x-footer />
 </body>
 </html>

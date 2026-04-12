@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\FoodListVote;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\FoodList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -21,6 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_image',
+        'location',
+        'bio',
     ];
 
     /**
@@ -44,5 +51,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function foodLists(): HasMany
+    {
+        return $this->hasMany(FoodList::class);
+    }
+
+    public function foodListVotes(): HasMany
+    {
+        return $this->hasMany(FoodListVote::class);
+    }
+
+    public function getProfileImageUrlAttribute(): string
+    {
+        if (!empty($this->profile_image)) {
+            return Storage::url($this->profile_image);
+        }
+
+        return asset('images/default-avatar.svg');
     }
 }
