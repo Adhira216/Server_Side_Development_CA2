@@ -6,6 +6,7 @@ use App\Models\Restaurant;
 use App\Models\FoodList;
 use App\Models\FoodListVote;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -254,5 +255,56 @@ class FoodListController extends Controller
             'restaurants' => 'nullable|array',
             'restaurants.*' => 'exists:restaurants,id',
         ];
+    }
+
+    public function surprise(Request $request): JsonResponse
+    {
+        $allowedMoods = ['spicy', 'sweet', 'budget', 'fancy'];
+        $mood = strtolower(trim((string) $request->query('mood', '')));
+
+        if ($mood !== '' && !in_array($mood, $allowedMoods, true)) {
+            $mood = '';
+        }
+
+        $foodList = null;
+        $matchedByMood = false;
+
+        if ($mood !== '') {
+            $foodList = FoodList::query()
+                ->where('tags', 'like', "%{$mood}%")
+                ->inRandomOrder()
+                ->first();
+
+            $matchedByMood = $foodList !== null;
+        }
+
+        if (!$foodList) {
+            $foodList = FoodList::query()
+                ->inRandomOrder()
+                ->first();
+        }
+
+        if (!$foodList) {
+            return response()->json([
+                'message' => 'No food lists are available yet.',
+                'mood' => $mood !== '' ? $mood : null,
+                'matched_by_mood' => false,
+                'food_list' => null,
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Surprise food list selected.',
+            'mood' => $mood !== '' ? $mood : null,
+            'matched_by_mood' => $matchedByMood,
+            'food_list' => [
+                'id' => $foodList->id,
+                'title' => $foodList->title,
+                'description' => $foodList->description,
+                'location' => $foodList->location,
+                'tags' => $foodList->tags,
+                'url' => route('lists.show', $foodList),
+            ],
+        ]);
     }
 }
