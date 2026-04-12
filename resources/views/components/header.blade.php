@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="{{ asset('css/variables.css') }}">
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<link rel="stylesheet" href="{{ asset('css/surprise-widget.css') }}">
 
 <header class="site-header">
     <div class="header-shell">
@@ -55,3 +56,5 @@
         </div>
     </div>
 </header>
+
+<x-surprise-widget />
