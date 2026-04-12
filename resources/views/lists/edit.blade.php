@@ -146,8 +146,8 @@
                                             >
 
                                             <span class="restaurant-selector-body">
-                                                @if($restaurant->image_url)
-                                                    <img src="{{ $restaurant->image_url }}" alt="{{ $restaurant->name }} image" class="restaurant-selector-image">
+                                                @if($restaurant->display_image_url)
+                                                    <img src="{{ $restaurant->display_image_url }}" alt="{{ $restaurant->name }} image" class="restaurant-selector-image">
                                                 @else
                                                     <span class="restaurant-selector-fallback">{{ strtoupper(substr($restaurant->name, 0, 1)) }}</span>
                                                 @endif
