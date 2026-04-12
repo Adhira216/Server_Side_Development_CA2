@@ -1,0 +1,31 @@
+/* Global CSS Variables */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap');
+
+:root {
+    --bg: #ffccbc;
+    --paper: rgba(255, 243, 230, 0.9);
+    --card: rgba(255, 255, 255, 0.95);
+    --panel: rgba(255, 250, 245, 0.9);
+    --surface: rgba(255, 255, 255, 0.8);
+    --line: rgba(255, 112, 67, 0.2);
+    --text: #bf360c;
+    --muted: #e64a19;
+    --accent: #ff7043;
+    --accent-dark: #d84315;
+    --accent-soft: #ffccbc;
+    --danger-bg: rgba(183, 28, 28, 0.08);
+    --danger-line: rgba(183, 28, 28, 0.22);
+    --danger-text: #b71c1c;
+
+    --home-surface: #fffdf9;
+    --home-panel: rgba(255, 251, 246, 0.92);
+    --home-ink: #27323f;
+    --home-muted: #6b7280;
+    --home-line: rgba(39, 50, 63, 0.09);
+    --home-plum: #76507a;
+}
+
+* {
+    box-sizing: border-box;
+}
