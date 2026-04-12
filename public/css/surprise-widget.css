@@ -94,11 +94,15 @@
 .surprise-widget-panel-head {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.4rem 0.8rem;
+    grid-template-areas:
+        "kicker close"
+        "title close";
+    gap: 0.28rem 0.8rem;
     align-items: start;
 }
 
 .surprise-widget-kicker {
+    grid-area: kicker;
     margin: 0;
     color: var(--home-muted);
     font-size: 0.76rem;
@@ -108,14 +112,17 @@
 }
 
 .surprise-widget-panel-head h3 {
+    grid-area: title;
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    line-height: 0.94;
+    font-size: clamp(1.8rem, 5vw, 2rem);
+    line-height: 1;
     color: var(--home-ink);
+    max-width: 10ch;
 }
 
 .surprise-widget-close {
+    grid-area: close;
     width: 2.2rem;
     height: 2.2rem;
     border: 1px solid rgba(39, 50, 63, 0.08);
@@ -325,5 +332,10 @@
     .surprise-widget-panel {
         width: min(308px, calc(100vw - 1.4rem));
         padding: 1rem;
+    }
+
+    .surprise-widget-panel-head h3 {
+        font-size: 1.72rem;
+        max-width: none;
     }
 }
