@@ -34,7 +34,7 @@
         <x-sidebar />
 
         <!-- Main Content -->
-        <main class="home-main page">
+        <main class="form-wrapper">
             <div class="auth-container">
                 <h1>Register</h1>
 
