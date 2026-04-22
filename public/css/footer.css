@@ -2,16 +2,10 @@
 
 @import url('variables.css');
 
-.site-footer-wrap {
-    width: min(1320px, calc(100% - 2rem));
-    margin: 2rem auto 2rem;
-}
-
 .site-footer {
     position: relative;
     overflow: hidden;
     padding: 2.4rem 2.2rem 1.7rem;
-    border-radius: 30px;
     border: 1px solid rgba(39, 50, 63, 0.09);
     background:
         radial-gradient(circle at top right, rgba(118, 80, 122, 0.14), transparent 26%),
@@ -232,14 +226,8 @@
 }
 
 @media (max-width: 720px) {
-    .site-footer-wrap {
-        width: min(100% - 1rem, 1320px);
-        margin-top: 1.25rem;
-    }
-
     .site-footer {
         padding: 1.45rem 1.2rem 1.2rem;
-        border-radius: 22px;
     }
 
     .site-footer-grid {
