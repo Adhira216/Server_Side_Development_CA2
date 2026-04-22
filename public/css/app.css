@@ -19,14 +19,14 @@ body {
 /* Header */
 .site-header {
     position: sticky;
-    top: 0.85rem;
+    top: 0;
     z-index: 1000;
     background: transparent;
-    padding: 0 1rem;
+    padding: 0;
 }
 
 .header-shell {
-    width: min(1220px, 100%);
+    width:100%;
     margin: 0 auto;
 }
 
@@ -37,7 +37,6 @@ body {
     gap: 1rem;
     width: 100%;
     padding: 1rem 1.35rem;
-    border-radius: 24px;
     border: 1px solid rgba(118, 80, 122, 0.16);
     background:
         linear-gradient(135deg, rgba(255, 251, 246, 0.92), rgba(255, 246, 240, 0.82));
@@ -348,8 +347,8 @@ body {
     }
 
     .site-header {
-        top: 0.5rem;
-        padding: 0 0.5rem;
+        top: 0;
+        padding: 0;
     }
 
     .header-inner {
