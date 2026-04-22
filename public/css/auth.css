@@ -7,15 +7,18 @@
     background: var(--home-surface);
     border: 1px solid var(--home-line);
     border-radius: 24px;
-    padding: 3rem;
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+    box-sizing: border-box;
 }
 
 .form-wrapper .auth-container {
     background: var(--home-surface);
     border: 1px solid var(--home-line);
     border-radius: 24px;
-    padding: 3rem;
-    width: 90%;
+    padding: 2rem;
+    width: 100%;
 }
 
 /* Form title */
@@ -28,26 +31,28 @@
 
 /* Fields */
 .auth-container .field {
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.5rem;
 }
 
 .auth-container .field label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0;
     color: var(--home-ink);
 }
 
 .auth-container .field input,
 .auth-container .field textarea {
     width: 100%;
-    padding: 0.7rem 1rem;
-    border-radius: 24px;
+    min-height: 52px;
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
     border: 1px solid var(--home-line);
     background: var(--danger-bg);
     color: var(--home-ink);
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    line-height: 1.5;
     transition: border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -59,20 +64,22 @@
 }
 
 .auth-container .field textarea {
-    min-height: 120px;
+    min-height: 140px;
     resize: vertical;
 }
 
 /* Buttons */
 .auth-container .actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.2rem;
-    margin-top: 1.5rem;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 0.5rem;
 }
 
 .auth-container .actions button {
-    width: 100%;
+    min-width: 180px;
     padding: 0.95rem 1.45rem;
     border-radius: 999px;
     font-weight: 700;
@@ -136,14 +143,14 @@
 /* Multi-select dropdown */
 .auth-container .field select[multiple] {
     width: 100%;
-    min-height: 120px; /* similar to textarea */
-    padding: 0.7rem 1rem;
-    border-radius: 24px;
+    min-height: 140px; /* similar to textarea */
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
     border: 1px solid var(--home-line);
     background: var(--danger-bg);
     color: var(--home-ink);
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.4;
     transition: border-color 0.2s ease, background 0.2s ease;
     cursor: pointer;
@@ -176,8 +183,9 @@
 /* Small helper text */
 .auth-container .field small {
     display: block;
-    margin-top: 0.3rem;
-    font-size: 0.8rem;
+    margin-top: 0.1rem;
+    font-size: 0.84rem;
+    line-height: 1.55;
     color: var(--home-muted);
 }
 

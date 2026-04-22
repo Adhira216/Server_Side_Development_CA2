@@ -395,13 +395,15 @@ body {
 /* FIELDS */
 
 .field {
-    margin-bottom: 1.4rem;
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .field label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0;
     color: var(--text);
 }
 
@@ -409,13 +411,16 @@ body {
 .field input,
 .field textarea {
     width: 100%;
-    padding: 0.7rem 0.9rem;
-    border-radius: 24px;
+    min-height: 52px;
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
     border: 1px solid var(--accent);
     background: var(--bg);
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    line-height: 1.5;
     transition: border-color 0.2s ease, 0.2s ease;
+    box-sizing: border-box;
 }
 
 /* Focus state */
@@ -427,7 +432,7 @@ body {
 
 /* Textarea size */
 .field textarea {
-    min-height: 120px;
+    min-height: 140px;
     resize: vertical;
 }
 
@@ -453,17 +458,20 @@ body {
 
 /* Field error text */
 .field-error {
-    margin-top: 0.3rem;
-    font-size: 0.85rem;
+    margin-top: 0.15rem;
+    font-size: 0.86rem;
+    line-height: 1.45;
     color: #b23a3a;
 }
 
 /* Actions (buttons row) */
 .actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.2rem;
-    margin-top: 1.5rem;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 0.5rem;
 }
 
 /* Back link subtle hover */

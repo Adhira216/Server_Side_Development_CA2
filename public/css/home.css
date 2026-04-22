@@ -478,6 +478,8 @@
 .form-panel {
     display: grid;
     gap: 1.25rem;
+    width: 100%;
+    margin: 0;
 }
 
 .feature-card {
