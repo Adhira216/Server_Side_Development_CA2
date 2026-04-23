@@ -15,6 +15,8 @@
             grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
             gap: 1.5rem;
             padding: 2rem;
+            width: 100%;
+            margin: 0;
         }
 
         .profile-preview {
@@ -48,18 +50,18 @@
 
         .profile-form {
             display: grid;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .profile-form-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         .profile-field {
             display: grid;
-            gap: 0.45rem;
+            gap: 0.5rem;
         }
 
         .profile-field--full {
@@ -77,13 +79,15 @@
         .profile-field input,
         .profile-field textarea {
             width: 100%;
-            min-height: 50px;
+            min-height: 52px;
             padding: 0.9rem 1rem;
             border: 1px solid rgba(39, 50, 63, 0.12);
             border-radius: 18px;
             background: rgba(255, 255, 255, 0.88);
             color: var(--home-ink);
             font: inherit;
+            font-size: 1rem;
+            line-height: 1.5;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
         }
 
@@ -110,13 +114,15 @@
         .profile-error {
             font-size: 0.86rem;
             color: #9b4c4c;
+            line-height: 1.45;
         }
 
         .profile-actions {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.85rem;
-            margin-top: 0.35rem;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
         }
 
         .profile-button,

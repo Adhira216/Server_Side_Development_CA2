@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class FoodListController extends Controller
 {
@@ -259,44 +260,85 @@ class FoodListController extends Controller
 
     public function surprise(Request $request): JsonResponse
     {
-        $allowedMoods = ['spicy', 'sweet', 'budget', 'fancy'];
+        $allowedMoods = ['spicy', 'sweet', 'budget', 'fancy', 'coffee', 'italian'];
         $mood = strtolower(trim((string) $request->query('mood', '')));
+        $location = trim((string) $request->query('location', ''));
 
         if ($mood !== '' && !in_array($mood, $allowedMoods, true)) {
             $mood = '';
         }
 
-        $foodList = null;
-        $matchedByMood = false;
+        $locationLists = FoodList::query()
+            ->when($location !== '', function ($query) use ($location) {
+                $query->whereRaw('LOWER(location) = ?', [strtolower($location)]);
+            })
+            ->get();
 
-        if ($mood !== '') {
-            $foodList = FoodList::query()
-                ->where('tags', 'like', "%{$mood}%")
-                ->inRandomOrder()
-                ->first();
-
-            $matchedByMood = $foodList !== null;
+        if ($locationLists->isEmpty() && $location !== '') {
+            return response()->json([
+                'success' => false,
+                'message' => $mood !== ''
+                    ? 'No food list found for that mood in this location.'
+                    : 'No food list found for this location.',
+                'mood' => $mood !== '' ? $mood : null,
+                'location' => $location,
+                'match_type' => 'none',
+                'food_list' => null,
+            ], 404);
         }
 
-        if (!$foodList) {
-            $foodList = FoodList::query()
-                ->inRandomOrder()
-                ->first();
+        $foodList = null;
+
+        if ($mood !== '') {
+            $candidateLists = $location !== ''
+                ? $locationLists
+                : FoodList::query()->get();
+
+            $foodList = $this->pickRandomFromCollection(
+                $candidateLists->filter(fn (FoodList $foodList) => $this->foodListMatchesMood($foodList, $mood))
+            );
+
+            if ($foodList) {
+                $matchType = $location !== '' ? 'mood_and_location' : 'mood_only';
+            }
+
+            if (!$foodList) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $location !== ''
+                        ? 'No food list found for that mood in this location.'
+                        : 'No food list found for that mood.',
+                    'mood' => $mood,
+                    'location' => $location !== '' ? $location : null,
+                    'match_type' => 'none',
+                    'food_list' => null,
+                ], 404);
+            }
+        } elseif ($location !== '') {
+            $foodList = $this->pickRandomFromCollection($locationLists);
+        } else {
+            $foodList = FoodList::query()->inRandomOrder()->first();
         }
 
         if (!$foodList) {
             return response()->json([
-                'message' => 'No food lists are available yet.',
+                'success' => false,
+                'message' => 'No food list found for that filter.',
                 'mood' => $mood !== '' ? $mood : null,
-                'matched_by_mood' => false,
+                'location' => $location !== '' ? $location : null,
+                'match_type' => 'none',
                 'food_list' => null,
             ], 404);
         }
 
         return response()->json([
+            'success' => true,
             'message' => 'Surprise food list selected.',
             'mood' => $mood !== '' ? $mood : null,
-            'matched_by_mood' => $matchedByMood,
+            'location' => $location !== '' ? $location : null,
+            'match_type' => $mood !== ''
+                ? ($location !== '' ? 'mood_and_location' : 'mood_only')
+                : ($location !== '' ? 'location_only' : 'random'),
             'food_list' => [
                 'id' => $foodList->id,
                 'title' => $foodList->title,
@@ -306,5 +348,23 @@ class FoodListController extends Controller
                 'url' => route('lists.show', $foodList),
             ],
         ]);
+    }
+
+    private function foodListMatchesMood(FoodList $foodList, string $mood): bool
+    {
+        $tags = collect(explode(',', (string) $foodList->tags))
+            ->map(fn (string $tag) => strtolower(trim($tag)))
+            ->filter();
+
+        return $tags->contains($mood);
+    }
+
+    private function pickRandomFromCollection(Collection $foodLists): ?FoodList
+    {
+        if ($foodLists->isEmpty()) {
+            return null;
+        }
+
+        return $foodLists->shuffle()->first();
     }
 }

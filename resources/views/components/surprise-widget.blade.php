@@ -23,11 +23,23 @@
             Choose a mood and jump straight into a curated food trail.
         </p>
 
+        <div class="surprise-widget-location">
+            <label for="surpriseWidgetLocation">Location</label>
+            <select id="surpriseWidgetLocation" data-surprise-location>
+                <option value="">Any location</option>
+                @foreach($availableLocations as $availableLocation)
+                    <option value="{{ $availableLocation }}">{{ $availableLocation }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="surprise-widget-moods" role="group" aria-label="Choose a food mood">
-            <button type="button" class="surprise-mood is-active" data-mood="spicy">Spicy</button>
+            <button type="button" class="surprise-mood" data-mood="spicy">Spicy</button>
             <button type="button" class="surprise-mood" data-mood="sweet">Sweet</button>
             <button type="button" class="surprise-mood" data-mood="budget">Budget</button>
             <button type="button" class="surprise-mood" data-mood="fancy">Fancy</button>
+            <button type="button" class="surprise-mood" data-mood="coffee">Coffee</button>
+            <button type="button" class="surprise-mood" data-mood="italian">Italian</button>
         </div>
 
         <button type="button" class="surprise-widget-action" data-surprise-action>
@@ -61,12 +73,14 @@
         const closeButton = widget.querySelector('[data-surprise-close]');
         const actionButton = widget.querySelector('[data-surprise-action]');
         const moodButtons = Array.from(widget.querySelectorAll('[data-mood]'));
+        const locationSelect = widget.querySelector('[data-surprise-location]');
         const feedback = widget.querySelector('[data-surprise-feedback]');
         const result = widget.querySelector('[data-surprise-result]');
         const resultTitle = widget.querySelector('[data-result-title]');
         const resultLocation = widget.querySelector('[data-result-location]');
         const resultTags = widget.querySelector('[data-result-tags]');
         const resultLink = widget.querySelector('[data-result-link]');
+        let selectedMood = null;
 
         const setOpen = (isOpen) => {
             widget.classList.toggle('is-open', isOpen);
@@ -75,6 +89,7 @@
         };
 
         const setMood = (mood) => {
+            selectedMood = mood;
             moodButtons.forEach((button) => {
                 button.classList.toggle('is-active', button.dataset.mood === mood);
             });
@@ -131,7 +146,7 @@
 
         moodButtons.forEach((button) => {
             button.addEventListener('click', () => {
-                setMood(button.dataset.mood);
+                setMood(selectedMood === button.dataset.mood ? null : button.dataset.mood);
             });
         });
 
@@ -148,7 +163,7 @@
         });
 
         actionButton.addEventListener('click', async () => {
-            const activeMood = widget.querySelector('.surprise-mood.is-active')?.dataset.mood ?? '';
+            const selectedLocation = locationSelect?.value.trim() ?? '';
             const url = new URL(widget.dataset.surpriseUrl, window.location.origin);
 
             clearResult();
@@ -156,8 +171,12 @@
             actionButton.disabled = true;
             actionButton.textContent = 'Picking...';
 
-            if (activeMood !== '') {
-                url.searchParams.set('mood', activeMood);
+            if (selectedMood) {
+                url.searchParams.set('mood', selectedMood);
+            }
+
+            if (selectedLocation !== '') {
+                url.searchParams.set('location', selectedLocation);
             }
 
             try {
@@ -169,14 +188,20 @@
 
                 const data = await response.json();
 
-                if (!response.ok || !data.food_list) {
+                if (!response.ok || data.success === false || !data.food_list) {
                     throw new Error(data.message || 'No food lists available right now.');
                 }
 
                 renderResult(data.food_list);
-                setFeedback(data.matched_by_mood
-                    ? `Picked for the "${data.mood}" mood.`
-                    : 'No exact mood match found, so here is a fresh random pick.');
+                setFeedback(
+                    data.match_type === 'mood_and_location'
+                        ? `Picked for "${data.mood}" in ${data.location}.`
+                        : data.match_type === 'mood_only'
+                            ? `Picked for the "${data.mood}" mood.`
+                            : data.match_type === 'location_only'
+                                ? `Picked from ${data.location}.`
+                                : 'Here is a fresh random pick.'
+                );
             } catch (error) {
                 clearResult();
                 setFeedback(error.message || 'Could not load a surprise pick right now.');

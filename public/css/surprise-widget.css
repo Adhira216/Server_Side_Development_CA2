@@ -149,6 +149,41 @@
     max-width: 28ch;
 }
 
+.surprise-widget-location {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 0.95rem;
+}
+
+.surprise-widget-location label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--home-muted);
+}
+
+.surprise-widget-location select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(39, 50, 63, 0.08);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 251, 248, 0.88));
+    color: var(--home-ink);
+    font: inherit;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74);
+    transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.surprise-widget-location select:focus {
+    outline: none;
+    border-color: rgba(118, 80, 122, 0.2);
+    box-shadow:
+        0 0 0 4px rgba(118, 80, 122, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
 .surprise-widget-moods {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -332,6 +367,10 @@
     .surprise-widget-panel {
         width: min(308px, calc(100vw - 1.4rem));
         padding: 1rem;
+    }
+
+    .surprise-widget-moods {
+        gap: 0.7rem;
     }
 
     .surprise-widget-panel-head h3 {
