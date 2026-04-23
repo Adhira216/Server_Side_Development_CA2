@@ -1,10 +1,18 @@
 # TasteTrail – Food List Web Application
-TasteTrail is a web application designed to help users discover restaurant and food recommendations through curated lists created by other users. Instead of focusing only on individual restaurant reviews, this platform focuses on list-based discovery, where users can create themed collections of restaurant recommendations.  
-These lists allow users to share curated food experiences, making it easier for others to quickly find recommendations that match their taste.  
+<img src="assets/SSD_CA2_GIF_1.gif" width="800" />
 
+## 🍴 About TasteTrail
+**TasteTrail** is a web application designed to help users discover restaurant and food recommendations through curated lists created by other users. Instead of focusing only on individual restaurant reviews, this platform focuses on list-based discovery, where users can create themed collections of restaurant recommendations.  
+These lists allow users to share curated food experiences, making it easier for others to quickly find recommendations that match their taste. 
+
+<img src="assets/SSD_CA2_GIF_2.gif" width="800" />
+
+## 🍜 Discover Restaurants
 Many existing food platforms focus on reviewing individual restaurants, while being useful this can often require users to find grouped recommendations tailored to particular preferences. TasteTrail solves this problem by allowing users to browse lists of restaurant recommendations organised by themes and tags. It allows users to create and customise their own collections of restaurant recommendations.
 
-## Features
+<img src="assets/SSD_CA2_GIF_3.gif" width="800" />
+
+## ✨ Features
 - User authentication (register and login)
 - CRUD functionality for creating, editing, and deleting lists
 - Ability to add restaurants or places to lists
@@ -14,7 +22,7 @@ Many existing food platforms focus on reviewing individual restaurants, while be
 - Form validation and error handling
 - Viewing individual list pages with restaurant details
 
-# Installation
+# ⚙️ Installation
 
 This project is developed with Laravel. Follow the installation guide below to install and set up this website.
 
