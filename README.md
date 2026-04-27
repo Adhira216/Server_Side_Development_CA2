@@ -90,3 +90,32 @@ php artisan serve
 http://127.0.0.1:8000
 ```
 Make sure your MySQL database server is running at the same time (e.g. XAMPP, MAMP), otherwise the application will not be able to connect to the database.
+
+
+# 🧑‍💻 About the Creators
+This project was developed by the following contributors:
+
+<table>
+  <tr>
+    <td><img src="SSD_CA2_Creators_Photos/Aloka.png" alt="Aloka" width="120"></td>
+    <td><h2>Aloka Muthumani Disanayaka Salpitige</h2>
+    <p>Primary Responsibility - Food Lists Feature</p>
+    <p>📧 <em>alokamuthumani5@gmail.com</em></p></td>
+  </tr>
+
+  <tr>
+    <td><img src="SSD_CA2_Creators_Photos/Adhira.png" alt="Adhira" width="120"></td>
+    <td><h2>Adhira Pillai</h2>
+    <p>Primary Responsibility - Authentication, Restaurants</p>
+    <p>📧 <em>adhirapillai16@gmail.com</em></p></td>
+  </tr>
+</table>
+
+
+## 📹 TasteTrail Screencast
+A video showcasing the website in use can be found here:  
+https://youtu.be/t74TvwAGf_I
+
+## 🌐 Deployed Website Link
+You can find the website deployed at:  
+https://tastetrail-b5e9cbd4adc4gxh0.switzerlandnorth-01.azurewebsites.net/
