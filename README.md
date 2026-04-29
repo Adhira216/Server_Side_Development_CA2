@@ -99,14 +99,14 @@ This project was developed by the following contributors:
   <tr>
     <td><img src="SSD_CA2_Creators_Photos/Aloka.png" alt="Aloka" width="120"></td>
     <td><h2>Aloka Muthumani Disanayaka Salpitige</h2>
-    <p>Primary Responsibility - Food Lists Feature</p>
+    <p>Primary Responsibility - Food Lists Feature, Suprise me Feature, Design</p>
     <p>📧 <em>alokamuthumani5@gmail.com</em></p></td>
   </tr>
 
   <tr>
     <td><img src="SSD_CA2_Creators_Photos/Adhira.png" alt="Adhira" width="120"></td>
     <td><h2>Adhira Pillai</h2>
-    <p>Primary Responsibility - Authentication, Restaurants</p>
+    <p>Primary Responsibility - Authentication, Restaurants </p>
     <p>📧 <em>adhirapillai16@gmail.com</em></p></td>
   </tr>
 </table>
