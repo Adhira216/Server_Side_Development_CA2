@@ -106,16 +106,18 @@ This project was developed by the following contributors:
   <tr>
     <td><img src="SSD_CA2_Creators_Photos/Adhira.png" alt="Adhira" width="120"></td>
     <td><h2>Adhira Pillai</h2>
-    <p>Primary Responsibility - Authentication, Restaurants </p>
+    <p>Primary Responsibility - User Authentication, Restaurants </p>
     <p>📧 <em>adhirapillai16@gmail.com</em></p></td>
   </tr>
 </table>
 
 
 ## 📹 TasteTrail Screencast
-A video showcasing the website in use can be found here:  
+The screencast provides a walkthrough of the main features and user experience of the platform.  
+The video showcasing the website in use can be found here:  
 https://youtu.be/t74TvwAGf_I
 
 ## 🌐 Deployed Website Link
+TasteTrail is deployed using Microsoft Azure, allowing the application to be hosted and accessed online.  
 You can find the website deployed at:  
 https://tastetrail-b5e9cbd4adc4gxh0.switzerlandnorth-01.azurewebsites.net/
